@@ -1,7 +1,6 @@
 package ru.senla.entity;
 
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

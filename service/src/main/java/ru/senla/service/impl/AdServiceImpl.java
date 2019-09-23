@@ -8,8 +8,15 @@ import org.springframework.transaction.annotation.Transactional;
 import reflection.interfaces.CsvReader;
 import reflection.interfaces.CsvWriter;
 import ru.senla.dao.entityDao.AdDao;
+import ru.senla.dao.entityDao.AdTypeDao;
+import ru.senla.dao.entityDao.CredentialDao;
+import ru.senla.dao.entityDao.UserDao;
 import ru.senla.entity.Ad;
+import ru.senla.entity.AdType;
+import ru.senla.entity.Credential;
+import ru.senla.entity.User;
 import ru.senla.service.AdService;
+
 import java.util.List;
 
 @Service
@@ -20,13 +27,20 @@ public class AdServiceImpl implements AdService {
     private final AdDao adDao;
     private final CsvWriter csvWriter;
     private final CsvReader csvReader;
+    private final UserDao userDao;
+    private final CredentialDao credentialDao;
+    private final AdTypeDao adTypeDao;
 
     @Autowired
-    public AdServiceImpl(AdDao adDao, CsvWriter csvWriter, CsvReader csvReader) {
+    public AdServiceImpl(AdDao adDao, CsvWriter csvWriter, CsvReader csvReader, UserDao userDao, CredentialDao credentialDao, AdTypeDao adTypeDao) {
         this.adDao = adDao;
         this.csvWriter = csvWriter;
         this.csvReader = csvReader;
+        this.userDao = userDao;
+        this.credentialDao = credentialDao;
+        this.adTypeDao = adTypeDao;
     }
+
 
     public Ad getAdById(Long id) {
         Ad ad = (Ad) adDao.read(id);
@@ -67,5 +81,36 @@ public class AdServiceImpl implements AdService {
             adDao.saveOrUpdate(ad);
         }
         LOGGER.info(() -> "all users saved to DB");
+    }
+
+    public List<Ad> getAdsByUserId(Long userId) {
+        User user = (User) userDao.read(userId);
+        return user.getAdList();
+    }
+
+    public List<Ad> searchByAdMessageText(String text) {
+        List<Ad> ads = adDao.searchByText(text);
+        if (ads == null) {
+            LOGGER.info(() -> " No results for \"" + text + "\".");
+        } else {
+            LOGGER.info(() -> " Ads with \"" + text + "\"has gotten from DB.");
+        }
+        return ads;
+    }
+
+    public List<Ad> searchAdByAdType(AdType adType) {
+        AdType currentAdType = adTypeDao.getAdTypeByCurrentAdType(adType);
+        LOGGER.info(() -> " Ads with adType has gotten from DB.");
+        List<Ad> adList = currentAdType.getAdList();
+        adList.get(0).getAdMessage();
+        return adList;
+    }
+
+    public List<Ad> searchAdByUserLogin(String login) {
+        Credential credential = credentialDao.getCredentialByLogin(login);
+        User user = credential.getUser();
+        LOGGER.info(() -> " Ads with login has gotten from DB.");
+
+        return user.getAdList();
     }
 }

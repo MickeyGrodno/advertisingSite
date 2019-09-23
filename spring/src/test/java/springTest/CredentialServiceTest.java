@@ -57,7 +57,7 @@ public class CredentialServiceTest {
 
     @Test
     public void updateAndDeleteCredential() {
-        credential.setUserId(id);
+        credential.setCredentialId(id);
         credential.setLogin("NotMyLogin");
         credentialService.updateCredential(credential);
         credentialService.deleteCredential(credential);

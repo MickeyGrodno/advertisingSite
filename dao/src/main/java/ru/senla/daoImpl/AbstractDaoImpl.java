@@ -29,7 +29,7 @@ public class AbstractDaoImpl<T, PK extends Serializable>
     }
 
     public T read(PK id) {
-        return (T) factory.getCurrentSession().get(type, id);
+        return factory.getCurrentSession().get(type, id);
     }
 
     public void update(T o) {

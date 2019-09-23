@@ -11,33 +11,40 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.senla.context.AppConfig;
 import ru.senla.entity.Ad;
 import ru.senla.entity.AdType;
+import ru.senla.entity.Credential;
 import ru.senla.entity.User;
 import ru.senla.service.AdService;
 
 import java.util.Date;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AdServiceTest {
-
-    private AdService adService;
-
     @Autowired
-    public void setAdService(AdService adService) {
-        this.adService = adService;
-    }
+    private AdService adService;
 
     private static Ad ad;
     private static Long adId;
+    private static AdType adType;
+    private static Credential credential;
 
     @BeforeClass
     public static void createTestData() {
         User user = new User("Sergei", true, new Date(), 1);
-        AdType adType = new AdType("sdasd", "dsadsad", true);
+        adType = new AdType("Auto", "Mersedes", true);
+        credential = new Credential();
+        credential.setEmail("serg@mail.ru");
+        credential.setLogin("MyLogin");
+        credential.setPassword("mypassword");
+        credential.setRole("admin");
+        credential.setUser(user);
+        user.setCredential(credential);
         ad = new Ad(user, adType, "Test message", new Date(), new Date());
     }
 
@@ -46,6 +53,24 @@ public class AdServiceTest {
         adId = adService.saveAd(ad);
     }
 
+    @Test
+    public void searchByAdMessageText() {
+        List<Ad> adList = adService.searchByAdMessageText("Test");
+        assertTrue(adList.size() > 0);
+    }
+
+    @Test
+    public void searchAdByAdType() {
+
+        List<Ad> adList = adService.searchAdByAdType(adType);
+        assertTrue(adList.size() > 0);
+    }
+
+    @Test
+    public void searchAdByUserLogin() {
+        List<Ad> adList = adService.searchAdByUserLogin("MyLogin");
+        assertTrue(adList.size() > 0);
+    }
     @Test
     public void getAdById() {
         Ad ad = adService.getAdById(adId);

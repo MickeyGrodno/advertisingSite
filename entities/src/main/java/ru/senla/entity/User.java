@@ -5,6 +5,7 @@ import org.hibernate.annotations.CascadeType;
 import reflection.PropertyType;
 import reflection.annotations.CsvEntity;
 import reflection.annotations.CsvProperty;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -70,7 +71,7 @@ public class User implements Serializable {
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.DELETE})
     private List<Chat> chatList;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = javax.persistence.CascadeType.ALL)
     private Credential credential;
 
     public User(String firstName, boolean gender, Date birthDate, int userRating) {
@@ -163,4 +164,11 @@ public class User implements Serializable {
         this.chatList = chatList;
     }
 
+    public Credential getCredential() {
+        return credential;
+    }
+
+    public void setCredential(Credential credential) {
+        this.credential = credential;
+    }
 }

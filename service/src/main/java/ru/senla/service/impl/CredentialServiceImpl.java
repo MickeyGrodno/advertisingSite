@@ -31,7 +31,7 @@ public class CredentialServiceImpl implements CredentialService {
 
     public Credential getCredentialById(Long id) {
         Credential credential = (Credential) credentialDao.read(id);
-        LOGGER.info(() -> " Credential with id: " + credential.getUserId() + "has gotten from DB");
+        LOGGER.info(() -> " Credential with id: " + credential.getCredentialId() + "has gotten from DB");
         return credential;
     }
 
@@ -43,12 +43,12 @@ public class CredentialServiceImpl implements CredentialService {
 
     public void updateCredential(Credential credential) {
         credentialDao.update(credential);
-        LOGGER.info(() -> " Credential with UserId: " + credential.getUserId() + " was updated");
+        LOGGER.info(() -> " Credential with UserId: " + credential.getCredentialId() + " was updated");
     }
 
     public void deleteCredential(Credential Credential) {
         credentialDao.delete(Credential);
-        LOGGER.info(() -> " Credential with UserId: " + Credential.getUserId() + " was deleted");
+        LOGGER.info(() -> " Credential with UserId: " + Credential.getCredentialId() + " was deleted");
     }
 
     public List getAllCredentials() {

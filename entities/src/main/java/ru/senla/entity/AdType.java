@@ -70,7 +70,7 @@ public class AdType implements Serializable {
         this.classification = classification;
     }
 
-    public boolean isBuyOrSale() {
+    public boolean getBuyOrSale() {
         return buyOrSale;
     }
 

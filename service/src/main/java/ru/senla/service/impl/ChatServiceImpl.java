@@ -2,18 +2,13 @@ package ru.senla.service.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.HibernateException;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import reflection.AnnotationCSVReader;
-import reflection.AnnotationCSVWriter;
 import reflection.interfaces.CsvReader;
 import reflection.interfaces.CsvWriter;
 import ru.senla.dao.entityDao.ChatDao;
 import ru.senla.entity.AdType;
 import ru.senla.entity.Chat;
-import ru.senla.entity.User;
 import ru.senla.service.ChatService;
 
 import javax.transaction.Transactional;
@@ -55,8 +50,8 @@ public class ChatServiceImpl implements ChatService {
     }
 
     public void deleteChat(Chat chat) {
-            chatDao.delete(chat);
-            LOGGER.info(() -> " adType with id: " + chat.getId() + " was deleted");
+        chatDao.delete(chat);
+        LOGGER.info(() -> " adType with id: " + chat.getId() + " was deleted");
     }
 
     public List getAllChats() {
