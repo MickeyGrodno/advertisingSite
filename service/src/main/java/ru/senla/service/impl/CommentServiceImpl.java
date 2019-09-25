@@ -53,7 +53,7 @@ public class CommentServiceImpl implements CommentService {
 
     public List getAllComments() {
         List ads = commentDao.findAll(Comment.class);
-        LOGGER.info(() -> "all Comments have gotten from DB");
+        LOGGER.info(() -> "all comments have gotten from DB");
         return ads;
     }
 

@@ -74,6 +74,8 @@ public class HibernateConf {
                 "hibernate.hbm2ddl.auto", hbm2dll);
         hibernateProperties.setProperty(
                 "hibernate.dialect", hibernateDialect);
+        hibernateProperties.setProperty(
+                "hibernate.show_sql", hibernateShowSql);
 
         return hibernateProperties;
     }

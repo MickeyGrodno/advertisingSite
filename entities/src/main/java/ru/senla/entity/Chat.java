@@ -27,7 +27,7 @@ public class Chat implements Serializable {
     @Column(name = "chat_id", unique = true, nullable = false)
     private Long id;
 
-    @Column(name = "ad_message", nullable = false, length = 45)
+    @Column(name = "ad_message", nullable = false, length = 45, unique = true)
     private String chatName;
 
     @ManyToMany(fetch = FetchType.LAZY)

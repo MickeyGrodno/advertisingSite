@@ -13,8 +13,6 @@ import ru.senla.dao.entityDao.CredentialDao;
 import ru.senla.dao.entityDao.UserDao;
 import ru.senla.entity.Ad;
 import ru.senla.entity.AdType;
-import ru.senla.entity.Credential;
-import ru.senla.entity.User;
 import ru.senla.service.AdService;
 
 import java.util.List;
@@ -84,13 +82,14 @@ public class AdServiceImpl implements AdService {
     }
 
     public List<Ad> getAdsByUserId(Long userId) {
-        User user = (User) userDao.read(userId);
-        return user.getAdList();
+        List<Ad> ads = adDao.getByUserId(userId);
+        LOGGER.info(() -> "All user ads with id " + userId + "are obtained from the DB");
+        return ads;
     }
 
     public List<Ad> searchByAdMessageText(String text) {
         List<Ad> ads = adDao.searchByText(text);
-        if (ads == null) {
+        if (ads.size() == 0) {
             LOGGER.info(() -> " No results for \"" + text + "\".");
         } else {
             LOGGER.info(() -> " Ads with \"" + text + "\"has gotten from DB.");
@@ -99,18 +98,14 @@ public class AdServiceImpl implements AdService {
     }
 
     public List<Ad> searchAdByAdType(AdType adType) {
-        AdType currentAdType = adTypeDao.getAdTypeByCurrentAdType(adType);
+        List<Ad> ads = adDao.searchByAdType(adType);
         LOGGER.info(() -> " Ads with adType has gotten from DB.");
-        List<Ad> adList = currentAdType.getAdList();
-        adList.get(0).getAdMessage();
-        return adList;
+        return ads;
     }
 
     public List<Ad> searchAdByUserLogin(String login) {
-        Credential credential = credentialDao.getCredentialByLogin(login);
-        User user = credential.getUser();
+        List<Ad> ads = adDao.searchByUserLogin(login);
         LOGGER.info(() -> " Ads with login has gotten from DB.");
-
-        return user.getAdList();
+        return ads;
     }
 }

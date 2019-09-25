@@ -9,7 +9,6 @@ import reflection.interfaces.CsvWriter;
 import ru.senla.dao.entityDao.CredentialDao;
 import ru.senla.entity.Credential;
 import ru.senla.service.CredentialService;
-
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -53,7 +52,7 @@ public class CredentialServiceImpl implements CredentialService {
 
     public List getAllCredentials() {
         List ads = credentialDao.findAll(Credential.class);
-        LOGGER.info(() -> "all Credentials have gotten from DB");
+        LOGGER.info(() -> "all credentials have gotten from DB");
         return ads;
     }
 

@@ -9,6 +9,7 @@ import reflection.interfaces.CsvWriter;
 import ru.senla.dao.entityDao.ChatDao;
 import ru.senla.entity.AdType;
 import ru.senla.entity.Chat;
+import ru.senla.entity.User;
 import ru.senla.service.ChatService;
 
 import javax.transaction.Transactional;
@@ -39,25 +40,25 @@ public class ChatServiceImpl implements ChatService {
     public Long saveChat(Chat chat) {
 
         Long id = (Long) chatDao.create(chat);
-        LOGGER.info(() -> " adType with id: " + id + "saved in DB");
+        LOGGER.info(() -> " chat with id: " + id + "saved in DB");
         return id;
     }
 
     public void updateChat(Chat chat) {
 
         chatDao.update(chat);
-        LOGGER.info(() -> " adType with id: " + chat.getId() + " was updated");
+        LOGGER.info(() -> " chat with id: " + chat.getId() + " was updated");
     }
 
     public void deleteChat(Chat chat) {
         chatDao.delete(chat);
-        LOGGER.info(() -> " adType with id: " + chat.getId() + " was deleted");
+        LOGGER.info(() -> " chat with id: " + chat.getId() + " was deleted");
     }
 
     public List getAllChats() {
-        List ads = chatDao.findAll(AdType.class);
-        LOGGER.info(() -> "all adTypes have gotten from DB");
-        return ads;
+        List chats = chatDao.findAll(AdType.class);
+        LOGGER.info(() -> "all chats have gotten from DB");
+        return chats;
     }
 
     public void writeChatsToCsvFromDb() {
@@ -71,5 +72,11 @@ public class ChatServiceImpl implements ChatService {
             chatDao.saveOrUpdate(chat);
         }
         LOGGER.info(() -> "all chats saved to DB");
+    }
+
+    public List<String> getUserChatNames(User user) {
+        List<String> chatNames = chatDao.getUserChatNames(user);
+        LOGGER.info(() -> "all user chats have gotten from DB");
+        return chatNames;
     }
 }

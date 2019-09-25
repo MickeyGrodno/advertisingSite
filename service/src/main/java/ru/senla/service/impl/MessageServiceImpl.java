@@ -8,6 +8,7 @@ import reflection.interfaces.CsvReader;
 import reflection.interfaces.CsvWriter;
 import ru.senla.dao.entityDao.MessageDao;
 import ru.senla.entity.Message;
+import ru.senla.entity.User;
 import ru.senla.service.MessageService;
 
 import javax.transaction.Transactional;
@@ -68,5 +69,11 @@ public class MessageServiceImpl implements MessageService {
             messageDao.saveOrUpdate(message);
         }
         LOGGER.info(() -> "all messages saved to DB");
+    }
+
+    public List<Message> getAllMessagesByChatName(String chatName) {
+        List<Message> messages = messageDao.getMessagesByChatName(chatName);
+        LOGGER.info(() -> "all messages by chat name "+chatName+" gotten from DB");
+        return messages;
     }
 }

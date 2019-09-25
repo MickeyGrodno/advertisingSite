@@ -1,6 +1,7 @@
 package ru.senla.service;
 
 import ru.senla.entity.Chat;
+import ru.senla.entity.User;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface ChatService {
     void writeChatsToCsvFromDb();
 
     void readChatsFromCsvToDb();
+
+    List<String> getUserChatNames(User user);
 }

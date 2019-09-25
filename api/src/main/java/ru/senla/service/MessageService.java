@@ -1,5 +1,7 @@
 package ru.senla.service;
 import ru.senla.entity.Message;
+import ru.senla.entity.User;
+
 import java.util.List;
 
 public interface MessageService {
@@ -17,4 +19,6 @@ public interface MessageService {
     void writeMessagesToCsvFromDb();
 
     void readMessagesFromCsvToDb();
+
+    List<Message> getAllMessagesByChatName(String chatName);
 }

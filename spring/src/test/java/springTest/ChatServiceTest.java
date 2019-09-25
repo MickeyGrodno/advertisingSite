@@ -1,6 +1,5 @@
 package springTest;
 
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -14,7 +13,6 @@ import ru.senla.entity.Chat;
 import ru.senla.entity.Message;
 import ru.senla.entity.User;
 import ru.senla.service.ChatService;
-import ru.senla.service.impl.ChatServiceImpl;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,6 +20,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
@@ -32,6 +31,7 @@ public class ChatServiceTest {
     private ChatService chatService;
     private static Chat chat;
     private static Long id;
+    private static User user;
 
     @Autowired
     public void setChatService(ChatService chatService) {
@@ -43,15 +43,13 @@ public class ChatServiceTest {
         List<User> userList = new ArrayList<>();
         List<Message> messageList = new ArrayList<>();
         Message message = new Message();
-        User user = new User("Sergei", true, new Date(), 1);
+        user = new User("Sergei", true, new Date(), 1);
         chat = new Chat();
         userList.add(user);
-
         message.setChat(chat);
         message.setUser(user);
         message.setMessageDate(new Date());
         message.setText("Test text");
-
         chat.setChatName("Chat 1");
         chat.setUserList(userList);
         chat.setMessageList(messageList);
@@ -66,6 +64,13 @@ public class ChatServiceTest {
     public void bGetCredentialById() {
         Chat chatFromDb = chatService.getChatById(id);
         assertEquals("Chat 1", chatFromDb.getChatName());
+    }
+
+    @Test
+    public void getChatNames() {
+        user.setId((long) 9);
+        List<String> chatNames = chatService.getUserChatNames(user);
+        assertTrue(chatNames.size() > 0);
     }
 
     @Test

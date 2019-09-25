@@ -20,6 +20,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
@@ -29,6 +30,8 @@ public class MessageServiceTest {
     private static MessageService messageService;
     private static Message message;
     private static Long id;
+    private static User user;
+    private static Chat chat;
 
     @Autowired
     public void setMessageService(MessageService messageService) {
@@ -38,8 +41,8 @@ public class MessageServiceTest {
     @BeforeClass
     public static void init() {
         message = new Message();
-        Chat chat = new Chat();
-        User user = new User("Sergei", true, new Date(), 1);
+        chat = new Chat();
+        user = new User("Sergei", true, new Date(), 1);
         List<User> userList = new ArrayList<>();
         userList.add(user);
         chat.setChatName("First chat");
@@ -59,6 +62,12 @@ public class MessageServiceTest {
     public void getMessageById() {
         Message messageFromDb = messageService.getMessageById(id);
         assertEquals("Test text", messageFromDb.getText());
+    }
+
+    @Test
+    public void getMessagesByChatName() {
+        List<Message> messages = messageService.getAllMessagesByChatName(chat.getChatName());
+        assertTrue(messages.size() > 0);
     }
 
     @Test

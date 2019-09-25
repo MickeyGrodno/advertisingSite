@@ -33,6 +33,7 @@ public class AdServiceTest {
     private static Long adId;
     private static AdType adType;
     private static Credential credential;
+    private static Long userId;
 
     @BeforeClass
     public static void createTestData() {
@@ -46,6 +47,7 @@ public class AdServiceTest {
         credential.setUser(user);
         user.setCredential(credential);
         ad = new Ad(user, adType, "Test message", new Date(), new Date());
+        userId = ad.getUser().getId();
     }
 
     @Test
@@ -53,6 +55,11 @@ public class AdServiceTest {
         adId = adService.saveAd(ad);
     }
 
+    @Test
+    public void bGetByUserId(){
+        List<Ad> ads = adService.getAdsByUserId((long) 3);
+        assertNotNull(ads);
+    }
     @Test
     public void searchByAdMessageText() {
         List<Ad> adList = adService.searchByAdMessageText("Test");
