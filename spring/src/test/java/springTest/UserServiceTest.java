@@ -8,8 +8,13 @@ import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import ru.senla.context.AppConfig;
+import ru.senla.dao.entityDao.CredentialDao;
+import ru.senla.dto.CredentialDto;
+import ru.senla.dto.UserDto;
 import ru.senla.entity.User;
+import ru.senla.service.CredentialService;
 import ru.senla.service.UserService;
 
 import java.util.Date;
@@ -20,45 +25,68 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
+@WebAppConfiguration
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 
 public class UserServiceTest {
     private static UserService userService;
-    private static User user;
+    private static UserDto userDto;
     private static Long id;
+    private static CredentialDto credentialDto;
+    private static CredentialService credentialService;
+    private static Long credentialId;
+
+    @Autowired
+    public void setCredentialService(CredentialService credentialService) {
+        UserServiceTest.credentialService = credentialService;
+    }
 
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
+
     @BeforeClass
     public static void init() {
-        user = new User("Sergei", true, new Date(), 1);
+        userDto = new UserDto();
+        userDto.setFirstName("Dmitry");
+        userDto.setGender(true);
+        userDto.setBirthDate(new Date());
+        userDto.setUserRating(15);
+
+        credentialDto = new CredentialDto();
+        credentialDto.setEmail("s@mail.ru");
+        credentialDto.setLogin("Log");
+        credentialDto.setPassword("mypassword");
+        credentialDto.setRole("admin");
     }
 
     @Test
     public void aSave() {
-        id = userService.saveUser(user);
+        credentialId = credentialService.saveCredential(credentialDto);
+        userDto.setCredentialId(credentialId);
+        id = userService.saveUser(userDto);
     }
 
     @Test
     public void getUserById() {
-        User userFromDb = userService.getUserById(id);
-        assertEquals(1, userFromDb.getUserRating());
+        UserDto userDtoFromDb = userService.getUserById(id);
+        assertEquals(userDto.getUserRating(), userDtoFromDb.getUserRating());
     }
 
     @Test
     public void updateAndDeleteUser() {
-        user.setId(id);
-        user.setUserRating(5);
-        userService.updateUser(user);
-        userService.deleteUser(user);
+        userDto.setId(id);
+        userDto.setUserRating(5);
+        userService.updateUser(userDto);
+        userService.deleteUser(id);
+        credentialService.deleteCredential(credentialId);
     }
 
     @Test
     public void getAllUsers() {
-        List<User> userList = userService.getAllUsers();
+        List<UserDto> userList = userService.getAllUsers();
         assertNotNull(userList);
     }
 }

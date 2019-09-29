@@ -1,20 +1,21 @@
 package ru.senla.service;
 
+import ru.senla.dto.AdTypeDto;
 import ru.senla.entity.AdType;
 
 import java.util.List;
 
 public interface AdTypeService {
 
-    AdType getAdTypeById(Long id);
+    AdTypeDto getAdTypeById(Long id);
 
-    Long saveAdType(AdType adType);
+    Long saveAdType(AdTypeDto adTypeDto);
 
-    void updateAdType(AdType adType);
+    void updateAdType(AdTypeDto adTypeDto);
 
-    void deleteAdType(AdType adType);
+    void deleteAdType(Long id);
 
-    List getAllAdTypes();
+    List<AdTypeDto> getAllAdTypes();
 
     void writeAdTypesToCsvFromDb();
 

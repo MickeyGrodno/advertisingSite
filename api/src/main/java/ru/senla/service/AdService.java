@@ -1,5 +1,7 @@
 package ru.senla.service;
 
+import ru.senla.dto.AdDto;
+import ru.senla.dto.AdTypeDto;
 import ru.senla.entity.Ad;
 import ru.senla.entity.AdType;
 
@@ -7,25 +9,25 @@ import java.util.List;
 
 public interface AdService {
 
-    Ad getAdById(Long id);
+    AdDto getAdById(Long id);
 
-    Long saveAd(Ad ad);
+    Long saveAd(AdDto ad);
 
-    void updateAd(Ad ad);
+    void updateAd(AdDto ad);
 
-    void deleteAd(Ad ad);
+    void deleteAd(Long adId);
 
-    List<Ad> getAllAds();
+    List<AdDto> getAllAds();
 
     void writeAdsToCsvFromDb();
 
     void readAdsFromCsvToDb();
 
-    List<Ad> getAdsByUserId(Long userId);
+    List<AdDto> getAdsByUserId(Long userId);
 
-    List<Ad> searchAdByUserLogin(String login);
+    List<AdDto> searchAdByUserLogin(String login);
 
-    List<Ad> searchAdByAdType(AdType adType);
+    List<AdDto> searchAdByAdType(Long adTypeId);
 
-    List<Ad> searchByAdMessageText(String text);
+    List<AdDto> searchByAdMessageText(String text);
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import reflection.interfaces.CsvReader;
 import reflection.interfaces.CsvWriter;
 import ru.senla.dao.entityDao.AdTypeDao;
+import ru.senla.dto.AdTypeDto;
 import ru.senla.entity.AdType;
 import ru.senla.service.AdTypeService;
 
@@ -21,40 +22,48 @@ public class AdTypeServiceImpl implements AdTypeService {
     private final AdTypeDao adTypeDao;
     private final CsvWriter csvWriter;
     private final CsvReader csvReader;
+    private final EntityToDtoConverterImpl entityToDtoConverter;
 
     @Autowired
-    public AdTypeServiceImpl(AdTypeDao adTypeDao, CsvWriter csvWriter, CsvReader csvReader) {
+    public AdTypeServiceImpl(AdTypeDao adTypeDao, CsvWriter csvWriter, CsvReader csvReader,
+                             EntityToDtoConverterImpl entityToDtoConverter) {
         this.adTypeDao = adTypeDao;
         this.csvWriter = csvWriter;
         this.csvReader = csvReader;
+        this.entityToDtoConverter = entityToDtoConverter;
     }
 
-    public AdType getAdTypeById(Long id) {
+    public AdTypeDto getAdTypeById(Long id) {
         AdType adType = (AdType) adTypeDao.read(id);
+        AdTypeDto adTypeDto = entityToDtoConverter.adTypeToAdTypeDto(adType);
         LOGGER.info(() -> " adType with id: " + adType.getId() + "has gotten from DB");
-        return adType;
+        return adTypeDto;
     }
 
-    public Long saveAdType(AdType adType) {
+    public Long saveAdType(AdTypeDto adTypeDto) {
+        AdType adType = entityToDtoConverter.adTypeDtoToAdType(adTypeDto);
         Long id = (Long) adTypeDao.create(adType);
         LOGGER.info(() -> " adType with id: " + id + "saved in DB");
         return id;
     }
 
-    public void updateAdType(AdType adType) {
+    public void updateAdType(AdTypeDto adTypeDto) {
+        AdType adType = entityToDtoConverter.adTypeDtoToAdType(adTypeDto);
         adTypeDao.update(adType);
         LOGGER.info(() -> " adType with id: " + adType.getId() + " was updated");
     }
 
-    public void deleteAdType(AdType adType) {
+    public void deleteAdType(Long id) {
+        AdType adType = (AdType) adTypeDao.read(id);
         adTypeDao.delete(adType);
-        LOGGER.info(() -> " adType with id: " + adType.getId() + " was deleted");
+        LOGGER.info(() -> " adType with id: " + id + " was deleted");
     }
 
     public List getAllAdTypes() {
-        List ads = adTypeDao.findAll(AdType.class);
+        List<AdType> ads = adTypeDao.findAll(AdType.class);
+        List<AdTypeDto> adTypeDtoList = entityToDtoConverter.adTypeListToAdTypeDtoList(ads);
         LOGGER.info(() -> "all adTypes have gotten from DB");
-        return ads;
+        return adTypeDtoList;
     }
 
     public void writeAdTypesToCsvFromDb() {

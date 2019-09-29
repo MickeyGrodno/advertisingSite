@@ -9,17 +9,19 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>controllers</artifactId>
+    <artifactId>dto</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.senlainc.git-courses</groupId>
-            <artifactId>service</artifactId>
+            <artifactId>entities</artifactId>
             <version>1.0</version>
+            <scope>compile</scope>
         </dependency>
-
     </dependencies>
+
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+
 </project>

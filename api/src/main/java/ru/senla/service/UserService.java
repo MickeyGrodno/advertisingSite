@@ -1,17 +1,18 @@
 package ru.senla.service;
 
+import ru.senla.dto.UserDto;
 import ru.senla.entity.User;
 import java.util.List;
 
 public interface UserService {
 
-    User getUserById(Long id);
+    UserDto getUserById(Long id);
 
-    Long saveUser(User user);
+    Long saveUser(UserDto userDto);
 
-    void updateUser(User user);
+    void updateUser(UserDto userDto);
 
-    void deleteUser(User user);
+    void deleteUser(Long userId);
 
     List getAllUsers();
 

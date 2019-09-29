@@ -71,8 +71,8 @@ public class User implements Serializable {
     @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.DELETE})
     private List<Chat> chatList;
 
-    @OneToOne(mappedBy = "user", cascade = javax.persistence.CascadeType.ALL)
-    private Credential credential;
+    @Column(name = "credential_id", nullable = false)
+    private Long credentialId;
 
     public User(String firstName, boolean gender, Date birthDate, int userRating) {
         this.firstName = firstName;
@@ -164,11 +164,11 @@ public class User implements Serializable {
         this.chatList = chatList;
     }
 
-    public Credential getCredential() {
-        return credential;
+    public Long getCredentialId() {
+        return credentialId;
     }
 
-    public void setCredential(Credential credential) {
-        this.credential = credential;
+    public void setCredentialId(Long credentialId) {
+        this.credentialId = credentialId;
     }
 }

@@ -1,5 +1,6 @@
 package ru.senla.service;
 
+import ru.senla.dto.ChatDto;
 import ru.senla.entity.Chat;
 import ru.senla.entity.User;
 
@@ -7,13 +8,13 @@ import java.util.List;
 
 public interface ChatService {
 
-    Chat getChatById(Long id);
+    ChatDto getChatById(Long id);
 
-    Long saveChat(Chat adType);
+    Long saveChat(ChatDto chatDto);
 
-    void updateChat(Chat adType);
+    void updateChat(ChatDto chatDto);
 
-    void deleteChat(Chat adType);
+    void deleteChat(Long id);
 
     List getAllChats();
 
@@ -21,5 +22,5 @@ public interface ChatService {
 
     void readChatsFromCsvToDb();
 
-    List<String> getUserChatNames(User user);
+    List<String> getUserChatNames(Long userId);
 }

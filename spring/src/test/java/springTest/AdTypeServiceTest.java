@@ -36,29 +36,29 @@ public class AdTypeServiceTest {
         adType = new AdType("Мебель", "для кухни", true);
 
     }
-
-    @Test
-    public void aSave() {
-        id = adTypeService.saveAdType(adType);
-    }
-
-    @Test
-    public void bgetAdTypeById() {
-        AdType adTypeFromDb = adTypeService.getAdTypeById(id);
-        assertEquals("для кухни", adTypeFromDb.getClassification());
-    }
-
-    @Test
-    public void updateAndDeleteAdType() {
-        adType.setId(id);
-        adType.setCategory("Авто");
-        adTypeService.updateAdType(adType);
-        adTypeService.deleteAdType(adType);
-    }
-
-    @Test
-    public void cGetAllAdTypes() {
-        List<AdType> adTypeList = adTypeService.getAllAdTypes();
-        assertNotNull(adTypeList);
-    }
+//
+//    @Test
+//    public void aSave() {
+//        id = adTypeService.saveAdType(adType);
+//    }
+//
+//    @Test
+//    public void bgetAdTypeById() {
+//        AdType adTypeFromDb = adTypeService.getAdTypeById(id);
+//        assertEquals("для кухни", adTypeFromDb.getClassification());
+//    }
+//
+//    @Test
+//    public void updateAndDeleteAdType() {
+//        adType.setId(id);
+//        adType.setCategory("Авто");
+//        adTypeService.updateAdType(adType);
+//        adTypeService.deleteAdType(adType);
+//    }
+//
+//    @Test
+//    public void cGetAllAdTypes() {
+//        List<AdType> adTypeList = adTypeService.getAllAdTypes();
+//        assertNotNull(adTypeList);
+//    }
 }

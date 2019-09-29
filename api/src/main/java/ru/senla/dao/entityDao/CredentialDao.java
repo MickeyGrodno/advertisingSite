@@ -6,5 +6,5 @@ import ru.senla.entity.Credential;
 public interface CredentialDao extends AbstractDao {
 
     Credential getCredentialByLogin(String login);
-
+    void addUserIdToCredential(Long credentialId, Long userId);
 }

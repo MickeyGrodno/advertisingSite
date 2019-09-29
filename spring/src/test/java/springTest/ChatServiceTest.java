@@ -8,11 +8,18 @@ import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import ru.senla.context.AppConfig;
+import ru.senla.dto.ChatDto;
+import ru.senla.dto.CredentialDto;
+import ru.senla.dto.MessageDto;
+import ru.senla.dto.UserDto;
 import ru.senla.entity.Chat;
 import ru.senla.entity.Message;
 import ru.senla.entity.User;
 import ru.senla.service.ChatService;
+import ru.senla.service.CredentialService;
+import ru.senla.service.UserService;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,59 +31,95 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
+@WebAppConfiguration
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 
 public class ChatServiceTest {
 
     private ChatService chatService;
-    private static Chat chat;
-    private static Long id;
-    private static User user;
+    private CredentialService credentialService;
+    private UserService userService;
+    private static ChatDto chatDto;
+    private static Long chatId;
+    private static UserDto userDto;
+    private static CredentialDto credentialDto;
+    private static MessageDto messageDto;
+    private static Long credentialId;
+    private static Long userId;
+
+    @Autowired
+    public void setCredentialService(CredentialService credentialService) {
+        this.credentialService = credentialService;
+    }
 
     @Autowired
     public void setChatService(ChatService chatService) {
         this.chatService = chatService;
     }
 
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
     @BeforeClass
     public static void init() {
-        List<User> userList = new ArrayList<>();
-        List<Message> messageList = new ArrayList<>();
-        Message message = new Message();
-        user = new User("Sergei", true, new Date(), 1);
-        chat = new Chat();
-        userList.add(user);
-        message.setChat(chat);
-        message.setUser(user);
-        message.setMessageDate(new Date());
-        message.setText("Test text");
-        chat.setChatName("Chat 1");
-        chat.setUserList(userList);
-        chat.setMessageList(messageList);
+        userDto = new UserDto();
+        userDto.setFirstName("Dmitry");
+        userDto.setGender(true);
+        userDto.setBirthDate(new Date());
+        userDto.setUserRating(15);
+        userDto.setCredentialId(1L);
+
+        credentialDto = new CredentialDto();
+        credentialDto.setEmail("saaaa@mail.ru");
+        credentialDto.setLogin("Login7");
+        credentialDto.setPassword("mypassword");
+        credentialDto.setRole("admin");
+
+        List<UserDto> userDtoList = new ArrayList<>();
+        List<MessageDto> messageDtoList = new ArrayList<>();
+        messageDto = new MessageDto();
+
+        chatDto = new ChatDto();
+        userDtoList.add(userDto);
+        messageDto.setChatDto(chatDto);
+        messageDto.setUserDto(userDto);
+        messageDto.setMessageDate(new Date());
+        messageDto.setText("Test text");
+        messageDtoList.add(messageDto);
+        chatDto.setChatName("Chat 1");
+        chatDto.setUserDtoList(userDtoList);
+        chatDto.setMessageDtoList(messageDtoList);
     }
 
     @Test
     public void aSave() {
-        id = chatService.saveChat(chat);
+        credentialId = credentialService.saveCredential(credentialDto);
+        userDto.setCredentialId(credentialId);
+        userId = userService.saveUser(userDto);
+        credentialDto.setUserId(userId);
+        chatId = chatService.saveChat(chatDto);
+
     }
 
     @Test
     public void bGetCredentialById() {
-        Chat chatFromDb = chatService.getChatById(id);
+        ChatDto chatFromDb = chatService.getChatById(chatId);
         assertEquals("Chat 1", chatFromDb.getChatName());
     }
 
     @Test
     public void getChatNames() {
-        user.setId((long) 9);
-        List<String> chatNames = chatService.getUserChatNames(user);
+        userDto.setId(userId);
+        List<String> chatNames = chatService.getUserChatNames(userId);
         assertTrue(chatNames.size() > 0);
     }
 
     @Test
     public void updateChat() {
-        chat.setChatName("Chat 2");
-        chatService.updateChat(chat);
+        chatDto.setChatName("Chat 2");
+        chatService.updateChat(chatDto);
     }
 
     @Test
@@ -87,6 +130,6 @@ public class ChatServiceTest {
 
     @Test
     public void zDelete() {
-        chatService.deleteChat(chat);
+        chatService.deleteChat(chatDto.getId());
     }
 }

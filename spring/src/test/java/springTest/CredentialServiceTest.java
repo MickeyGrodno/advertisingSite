@@ -8,12 +8,11 @@ import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import ru.senla.context.AppConfig;
-import ru.senla.entity.Credential;
-import ru.senla.entity.User;
+import ru.senla.dto.CredentialDto;
 import ru.senla.service.CredentialService;
 
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -21,11 +20,13 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
+@WebAppConfiguration
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 
 public class CredentialServiceTest {
     private static CredentialService credentialService;
-    private static Credential credential;
+    private static CredentialDto credentialDto;
     private static Long id;
 
     @Autowired
@@ -34,38 +35,37 @@ public class CredentialServiceTest {
     }
 
     @BeforeClass
-    public static void  init() {
-        User user = new User("Sergei", true, new Date(), 1);
-        credential = new Credential();
-        credential.setEmail("serg@mail.ru");
-        credential.setLogin("MyLogin");
-        credential.setPassword("mypassword");
-        credential.setRole("admin");
-        credential.setUser(user);
+    public static void init() {
+
+        credentialDto = new CredentialDto();
+        credentialDto.setEmail("se@mail.ru");
+        credentialDto.setLogin("Login");
+        credentialDto.setPassword("mypassword");
+        credentialDto.setRole("admin");
     }
 
     @Test
     public void aSave() {
-        id = credentialService.saveCredential(credential);
+        id = credentialService.saveCredential(credentialDto);
     }
 
     @Test
     public void getCredentialById() {
-        Credential credentialFromDb = credentialService.getCredentialById(id);
-        assertEquals("MyLogin", credentialFromDb.getLogin());
+        CredentialDto credentialDtoFromDb = credentialService.getCredentialById(id);
+        assertEquals("Login", credentialDtoFromDb.getLogin());
     }
 
     @Test
     public void updateAndDeleteCredential() {
-        credential.setCredentialId(id);
-        credential.setLogin("NotMyLogin");
-        credentialService.updateCredential(credential);
-        credentialService.deleteCredential(credential);
+        credentialDto.setCredentialId(id);
+        credentialDto.setLogin("NotMyLogin");
+        credentialService.updateCredential(credentialDto);
+        credentialService.deleteCredential(id);
     }
 
     @Test
     public void getAllCredentials() {
-        List<Credential> credentialList = credentialService.getAllCredentials();
-        assertNotNull(credentialList);
+        List<CredentialDto> credentialDtoList = credentialService.getAllCredentials();
+        assertNotNull(credentialDtoList);
     }
 }

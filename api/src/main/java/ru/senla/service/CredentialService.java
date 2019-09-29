@@ -1,18 +1,19 @@
 package ru.senla.service;
 
+import ru.senla.dto.CredentialDto;
 import ru.senla.entity.Credential;
 
 import java.util.List;
 
 public interface CredentialService {
 
-    Credential getCredentialById(Long id);
+    CredentialDto getCredentialById(Long id);
 
-    Long saveCredential(Credential credential);
+    Long saveCredential(CredentialDto credential);
 
-    void updateCredential(Credential credential);
+    void updateCredential(CredentialDto credential);
 
-    void deleteCredential(Credential credential);
+    void deleteCredential(Long id);
 
     List getAllCredentials();
 

@@ -1,5 +1,6 @@
 package ru.senla.daoImpl.entityDaoImpl;
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,5 +21,15 @@ public class CredentialDaoImpl extends AbstractDaoImpl implements CredentialDao 
     public Credential getCredentialByLogin(String login) {
         return (Credential) factory.getCurrentSession().createQuery("from Credential as c where c.login = :login")
                 .setString("login", login).uniqueResult();
+    }
+
+    public void addUserIdToCredential(Long credentialId, Long userId) {
+
+        Query query = factory.getCurrentSession().createQuery("update Credential set userId = :userId " +
+                "where credentialId = :credentialId");
+
+        query.setParameter("userId", userId);
+        query.setParameter("credentialId", credentialId);
+        query.executeUpdate();
     }
 }

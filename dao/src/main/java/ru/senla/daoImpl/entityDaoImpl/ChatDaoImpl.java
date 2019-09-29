@@ -19,10 +19,10 @@ public class ChatDaoImpl extends AbstractDaoImpl implements ChatDao {
     @Autowired
     private SessionFactory factory;
 
-    public List<String> getUserChatNames(User user) {
+    public List<String> getUserChatNames(Long userId) {
         return factory.getCurrentSession().createQuery("select c.chatName from Chat c " +
                 "join c.userList u where u.id = :id")
-                .setLong("id", user.getId())
+                .setLong("id", userId)
                 .list();
     }
 }
