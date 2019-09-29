@@ -1,4 +1,5 @@
 package ru.senla.service;
+import ru.senla.dto.MessageDto;
 import ru.senla.entity.Message;
 import ru.senla.entity.User;
 
@@ -6,19 +7,19 @@ import java.util.List;
 
 public interface MessageService {
 
-    Message getMessageById(Long id);
+    MessageDto getMessageById(Long id);
 
-    Long saveMessage(Message message);
+    Long saveMessage(MessageDto message);
 
-    void updateMessage(Message message);
+    void updateMessage(MessageDto message);
 
-    void deleteMessage(Message message);
+    void deleteMessage(Long id);
 
-    List getAllMessages();
+    List<MessageDto> getAllMessages();
 
     void writeMessagesToCsvFromDb();
 
     void readMessagesFromCsvToDb();
 
-    List<Message> getAllMessagesByChatName(String chatName);
+    List<MessageDto> getAllMessagesByChatName(String chatName);
 }

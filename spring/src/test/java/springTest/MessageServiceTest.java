@@ -53,34 +53,34 @@ public class MessageServiceTest {
         message.setText("Test text");
     }
 
-    @Test
-    public void aSave() {
-        id = messageService.saveMessage(message);
-    }
-
-    @Test
-    public void getMessageById() {
-        Message messageFromDb = messageService.getMessageById(id);
-        assertEquals("Test text", messageFromDb.getText());
-    }
-
-    @Test
-    public void getMessagesByChatName() {
-        List<Message> messages = messageService.getAllMessagesByChatName(chat.getChatName());
-        assertTrue(messages.size() > 0);
-    }
-
-    @Test
-    public void updateAndDeleteMessage() {
-        message.setId(id);
-        message.setText("New Text");
-        messageService.updateMessage(message);
-        messageService.deleteMessage(message);
-    }
-
-    @Test
-    public void getAllMessages() {
-        List<Message> messageList = messageService.getAllMessages();
-        assertNotNull(messageList);
-    }
+//    @Test
+//    public void aSave() {
+//        id = messageService.saveMessage(message);
+//    }
+//
+//    @Test
+//    public void getMessageById() {
+//        Message messageFromDb = messageService.getMessageById(id);
+//        assertEquals("Test text", messageFromDb.getText());
+//    }
+//
+//    @Test
+//    public void getMessagesByChatName() {
+//        List<Message> messages = messageService.getAllMessagesByChatName(chat.getChatName());
+//        assertTrue(messages.size() > 0);
+//    }
+//
+//    @Test
+//    public void updateAndDeleteMessage() {
+//        message.setId(id);
+//        message.setText("New Text");
+//        messageService.updateMessage(message);
+//        messageService.deleteMessage(message);
+//    }
+//
+//    @Test
+//    public void getAllMessages() {
+//        List<Message> messageList = messageService.getAllMessages();
+//        assertNotNull(messageList);
+//    }
 }

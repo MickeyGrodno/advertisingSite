@@ -83,7 +83,6 @@ public class ChatServiceTest {
 
         chatDto = new ChatDto();
         userDtoList.add(userDto);
-        messageDto.setChatDto(chatDto);
         messageDto.setUserDto(userDto);
         messageDto.setMessageDate(new Date());
         messageDto.setText("Test text");

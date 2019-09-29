@@ -4,9 +4,18 @@ import java.util.Date;
 
 public class CommentDto {
     private Long id;
-    private UserDto userDto;
+    private Long userId;
     private Date commentDate;
     private String commentMessage;
+    private Long adId;
+
+    public Long getAdId() {
+        return adId;
+    }
+
+    public void setAdId(Long adId) {
+        this.adId = adId;
+    }
 
     public Long getId() {
         return id;
@@ -16,12 +25,12 @@ public class CommentDto {
         this.id = id;
     }
 
-    public UserDto getUserDto() {
-        return userDto;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUserDto(UserDto userDto) {
-        this.userDto = userDto;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Date getCommentDate() {

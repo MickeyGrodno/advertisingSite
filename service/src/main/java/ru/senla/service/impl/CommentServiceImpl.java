@@ -6,9 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reflection.interfaces.CsvReader;
 import reflection.interfaces.CsvWriter;
+import ru.senla.dao.entityDao.AdDao;
 import ru.senla.dao.entityDao.CommentDao;
+import ru.senla.dao.entityDao.UserDao;
+import ru.senla.dto.CommentDto;
+import ru.senla.entity.Ad;
 import ru.senla.entity.Comment;
+import ru.senla.entity.User;
 import ru.senla.service.CommentService;
+import ru.senla.service.EntityToDtoConverter;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -21,40 +27,60 @@ public class CommentServiceImpl implements CommentService {
     private final CommentDao commentDao;
     private final CsvWriter csvWriter;
     private final CsvReader csvReader;
+    private final EntityToDtoConverter entityToDtoConverter;
+    private final AdDao adDao;
+    private final UserDao userDao;
 
     @Autowired
-    public CommentServiceImpl(CommentDao commentDao, CsvWriter csvWriter, CsvReader csvReader) {
+    public CommentServiceImpl(CommentDao commentDao, CsvWriter csvWriter, CsvReader csvReader,
+                              EntityToDtoConverter entityToDtoConverter, AdDao adDao, UserDao userDao) {
         this.commentDao = commentDao;
         this.csvWriter = csvWriter;
         this.csvReader = csvReader;
+        this.entityToDtoConverter = entityToDtoConverter;
+        this.adDao = adDao;
+        this.userDao = userDao;
     }
 
-    public Comment getCommentById(Long id) {
+    public CommentDto getCommentById(Long id) {
         Comment comment = (Comment) commentDao.read(id);
+        CommentDto commentDto = entityToDtoConverter.commentToCommentDto(comment);
         LOGGER.info(() -> " comment with id: " + comment.getId() + "has gotten from DB");
-        return comment;
+        return commentDto;
     }
 
-    public Long saveComment(Comment comment) {
+    public Long saveComment(CommentDto commentDto) {
+        Comment comment = entityToDtoConverter.commentDtoToComment(commentDto);
+        Ad ad = (Ad) adDao.read(commentDto.getAdId());
+        comment.setAd(ad);
+        User user = (User) userDao.read(commentDto.getUserId());
+        comment.setUser(user);
         Long id = (Long) commentDao.create(comment);
         LOGGER.info(() -> " comment with id: " + id + "saved in DB");
         return id;
     }
 
-    public void updateComment(Comment comment) {
+    public void updateComment(CommentDto commentDto) {
+        Comment comment = entityToDtoConverter.commentDtoToComment(commentDto);
+        Ad ad = (Ad) adDao.read(commentDto.getAdId());
+        comment.setAd(ad);
+        User user = (User) userDao.read(commentDto.getUserId());
+        comment.setUser(user);
         commentDao.update(comment);
         LOGGER.info(() -> " Comment with id: " + comment.getId() + " was updated");
     }
 
-    public void deleteComment(Comment comment) {
+    public void deleteComment(Long id) {
+        Comment comment = (Comment) commentDao.read(id);
         commentDao.delete(comment);
         LOGGER.info(() -> " Comment with id: " + comment.getId() + " was deleted");
     }
 
-    public List getAllComments() {
-        List ads = commentDao.findAll(Comment.class);
+    public List<CommentDto> getAllComments() {
+        List<Comment> ads = commentDao.findAll(Comment.class);
+        List<CommentDto> commentDtoList = entityToDtoConverter.commentListToCommentDtoList(ads);
         LOGGER.info(() -> "all comments have gotten from DB");
-        return ads;
+        return commentDtoList;
     }
 
     public void writeCommentsToCsvFromDb() {

@@ -45,7 +45,7 @@ public class ChatController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAdType(@PathVariable Long id) {
+    public void deleteChat(@PathVariable Long id) {
         chatService.deleteChat(id);
     }
 }

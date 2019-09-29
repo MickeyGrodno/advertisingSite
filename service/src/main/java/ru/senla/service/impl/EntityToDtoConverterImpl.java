@@ -74,18 +74,16 @@ public class EntityToDtoConverterImpl implements EntityToDtoConverter {
     public CommentDto commentToCommentDto(Comment comment) {
         CommentDto commentDto = new CommentDto();
         commentDto.setId(comment.getId());
-        UserDto userDto = userToUserDto(comment.getUser());
-        commentDto.setUserDto(userDto);
+        commentDto.setUserId(comment.getUser().getId());
         commentDto.setCommentDate(comment.getCommentDate());
         commentDto.setCommentMessage(comment.getCommentMessage());
+        commentDto.setAdId(comment.getAd().getId());
         return commentDto;
     }
 
     public Comment commentDtoToComment(CommentDto commentDto) {
         Comment comment = new Comment();
         comment.setId(commentDto.getId());
-        User user = userDtoToUser(commentDto.getUserDto());
-        comment.setUser(user);
         comment.setCommentDate(commentDto.getCommentDate());
         comment.setCommentMessage(commentDto.getCommentMessage());
         return comment;
@@ -287,7 +285,6 @@ public class EntityToDtoConverterImpl implements EntityToDtoConverter {
         Chat chat = new Chat();
         chat.setId(chatDto.getId());
         chat.setChatName(chatDto.getChatName());
-        chat.setMessageList(messageDtoListToMessageList(chatDto.getMessageDtoList()));
         chat.setUserList(userDtoListToUserList(chatDto.getUserDtoList()));
         return chat;
     }
@@ -295,8 +292,7 @@ public class EntityToDtoConverterImpl implements EntityToDtoConverter {
     public ChatDto chatToChatDto(Chat chat) {
         ChatDto chatDto = new ChatDto();
         chatDto.setId(chat.getId());
-        chatDto.setChatName(chat.getChatName());;
-        chatDto.setMessageDtoList(messageListToMessageDtoList(chat.getMessageList()));
+        chatDto.setChatName(chat.getChatName());
         chatDto.setUserDtoList(userListToUserDtoList(chat.getUserList()));
         return chatDto;
     }

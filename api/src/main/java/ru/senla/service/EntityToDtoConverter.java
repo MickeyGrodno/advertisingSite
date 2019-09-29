@@ -38,10 +38,11 @@ public interface EntityToDtoConverter {
     public List<User> userDtoListToUserList(List<UserDto> userDtoList);
     List<UserDto> userListToUserDtoList(List<User> userList);
     Message messageDtoToMessage(MessageDto messageDto);
-
+    MessageDto messageToMessageDto(Message message);
     Chat chatDtoToChat(ChatDto chatDto);
     ChatDto chatToChatDto(Chat chat);
     List<ChatDto> chatListToChatDtoList(List<Chat> chatList);
     List<Chat> chatDtoListToChatList(List<ChatDto> chatDtoList);
-
+    List<Message> messageDtoListToMessageList(List<MessageDto> messageDtoList);
+    List<MessageDto> messageListToMessageDtoList(List<Message> messageList);
 }

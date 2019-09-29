@@ -57,12 +57,13 @@ public class ChatServiceImpl implements ChatService {
     }
 
     public void deleteChat(Long id) {
-        chatDao.delete(id);
+        Chat chat = (Chat) chatDao.read(id);
+        chatDao.delete(chat);
         LOGGER.info(() -> " chat with id: " + id + " was deleted");
     }
 
     public List<ChatDto> getAllChats() {
-        List<Chat> chats = chatDao.findAll(AdType.class);
+        List<Chat> chats = chatDao.findAll(Chat.class);
         List<ChatDto> chatDtoList = entityToDtoConverter.chatListToChatDtoList(chats);
         LOGGER.info(() -> "all chats have gotten from DB");
         return chatDtoList;
