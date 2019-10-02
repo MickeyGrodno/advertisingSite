@@ -19,10 +19,6 @@ public interface AdService {
 
     List<AdDto> getAllAds();
 
-    void writeAdsToCsvFromDb();
-
-    void readAdsFromCsvToDb();
-
     List<AdDto> getAdsByUserId(Long userId);
 
     List<AdDto> searchAdByUserLogin(String login);

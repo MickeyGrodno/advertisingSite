@@ -17,9 +17,5 @@ public interface MessageService {
 
     List<MessageDto> getAllMessages();
 
-    void writeMessagesToCsvFromDb();
-
-    void readMessagesFromCsvToDb();
-
     List<MessageDto> getAllMessagesByChatName(String chatName);
 }

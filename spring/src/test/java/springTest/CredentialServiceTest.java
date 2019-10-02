@@ -25,7 +25,7 @@ import static org.junit.Assert.assertNotNull;
 
 
 public class CredentialServiceTest {
-    private static CredentialService credentialService;
+    private CredentialService credentialService;
     private static CredentialDto credentialDto;
     private static Long id;
 

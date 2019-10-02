@@ -16,8 +16,4 @@ public interface AdTypeService {
     void deleteAdType(Long id);
 
     List<AdTypeDto> getAllAdTypes();
-
-    void writeAdTypesToCsvFromDb();
-
-    void readAdTypesFromCsvToDb();
 }

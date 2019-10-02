@@ -16,7 +16,4 @@ public interface UserService {
 
     List getAllUsers();
 
-    void writeUsersToCsvFromDb();
-
-    void readUsersFromCsvToDb();
 }

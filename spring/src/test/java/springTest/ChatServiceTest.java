@@ -82,11 +82,11 @@ public class ChatServiceTest {
         messageDto = new MessageDto();
 
         chatDto = new ChatDto();
-        userDtoList.add(userDto);
+//        userDtoList.add(userDto);
         messageDto.setUserDto(userDto);
         messageDto.setMessageDate(new Date());
         messageDto.setText("Test text");
-        messageDtoList.add(messageDto);
+//        messageDtoList.add(messageDto);
         chatDto.setChatName("Chat 1");
         chatDto.setUserDtoList(userDtoList);
         chatDto.setMessageDtoList(messageDtoList);
@@ -97,13 +97,15 @@ public class ChatServiceTest {
         credentialId = credentialService.saveCredential(credentialDto);
         userDto.setCredentialId(credentialId);
         userId = userService.saveUser(userDto);
-        credentialDto.setUserId(userId);
+//        credentialDto.setUserId(userId);
+        userDto.setId(userId);
+        chatDto.getUserDtoList().add(userDto);
         chatId = chatService.saveChat(chatDto);
 
     }
 
     @Test
-    public void bGetCredentialById() {
+    public void bGetChatById() {
         ChatDto chatFromDb = chatService.getChatById(chatId);
         assertEquals("Chat 1", chatFromDb.getChatName());
     }
@@ -117,6 +119,7 @@ public class ChatServiceTest {
 
     @Test
     public void updateChat() {
+        chatDto.setId(chatId);
         chatDto.setChatName("Chat 2");
         chatService.updateChat(chatDto);
     }
@@ -129,6 +132,8 @@ public class ChatServiceTest {
 
     @Test
     public void zDelete() {
-        chatService.deleteChat(chatDto.getId());
+        chatService.deleteChat(chatId);
+        userService.deleteUser(userId);
+        credentialService.deleteCredential(credentialId);
     }
 }

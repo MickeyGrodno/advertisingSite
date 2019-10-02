@@ -5,16 +5,14 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import reflection.interfaces.CsvReader;
-import reflection.interfaces.CsvWriter;
 import ru.senla.dao.entityDao.AdDao;
 import ru.senla.dao.entityDao.AdTypeDao;
 import ru.senla.dao.entityDao.CredentialDao;
 import ru.senla.dao.entityDao.UserDao;
 import ru.senla.dto.AdDto;
-import ru.senla.dto.AdTypeDto;
 import ru.senla.entity.Ad;
 import ru.senla.entity.AdType;
+import ru.senla.entity.User;
 import ru.senla.service.AdService;
 import ru.senla.service.EntityToDtoConverter;
 
@@ -26,19 +24,15 @@ public class AdServiceImpl implements AdService {
 
     private static final Logger LOGGER = LogManager.getLogger(AdServiceImpl.class.getName());
     private final AdDao adDao;
-    private final CsvWriter csvWriter;
-    private final CsvReader csvReader;
     private final UserDao userDao;
     private final CredentialDao credentialDao;
     private final AdTypeDao adTypeDao;
     private final EntityToDtoConverter entityToDtoConverter;
 
     @Autowired
-    public AdServiceImpl(AdDao adDao, CsvWriter csvWriter, CsvReader csvReader, UserDao userDao,
+    public AdServiceImpl(AdDao adDao, UserDao userDao,
                          CredentialDao credentialDao, AdTypeDao adTypeDao, EntityToDtoConverter entityToDtoConverter) {
         this.adDao = adDao;
-        this.csvWriter = csvWriter;
-        this.csvReader = csvReader;
         this.userDao = userDao;
         this.credentialDao = credentialDao;
         this.adTypeDao = adTypeDao;
@@ -55,6 +49,8 @@ public class AdServiceImpl implements AdService {
 
     public Long saveAd(AdDto adDto) {
         Ad ad = entityToDtoConverter.adDtoToAd(adDto);
+        User user = (User) userDao.load(adDto.getUserDto().getId());
+        ad.setUser(user);
         Long id = (Long) adDao.create(ad);
         LOGGER.info(() -> " ad with id: " + id + "saved in DB");
         return id;
@@ -67,7 +63,7 @@ public class AdServiceImpl implements AdService {
     }
 
     public void deleteAd(Long adId) {
-        Ad ad = (Ad) adDao.read(adId);
+        Ad ad = (Ad) adDao.load(adId);
         adDao.delete(ad);
         LOGGER.info(() -> " ad with id: " + adId + " was deleted");
     }
@@ -77,19 +73,6 @@ public class AdServiceImpl implements AdService {
         List<AdDto> adsDto = entityToDtoConverter.adListToAdDtoList(ads);
         LOGGER.info(() -> "all ad have gotten from DB");
         return adsDto;
-    }
-
-    public void writeAdsToCsvFromDb() {
-        csvWriter.writeToCsvFile(getAllAds());
-        LOGGER.info(() -> "all users saved to CSV");
-    }
-
-    public void readAdsFromCsvToDb() {
-        List<Ad> ads = (List<Ad>) csvReader.readerFromCsv(Ad.class);
-        for (Object ad : ads) {
-            adDao.saveOrUpdate(ad);
-        }
-        LOGGER.info(() -> "all users saved to DB");
     }
 
     public List<AdDto> getAdsByUserId(Long userId) {

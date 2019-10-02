@@ -1,4 +1,4 @@
-package ru.senla.controler;
+package ru.senla.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;

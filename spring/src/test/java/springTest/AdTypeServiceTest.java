@@ -8,7 +8,9 @@ import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import ru.senla.context.AppConfig;
+import ru.senla.dto.AdTypeDto;
 import ru.senla.entity.AdType;
 import ru.senla.service.AdTypeService;
 
@@ -19,11 +21,12 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
+@WebAppConfiguration
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 
 public class AdTypeServiceTest {
     private AdTypeService adTypeService;
-    private static AdType adType;
+    private static AdTypeDto adTypeDto;
     private static Long id;
 
     @Autowired
@@ -33,32 +36,34 @@ public class AdTypeServiceTest {
 
     @BeforeClass
     public static void init() {
-        adType = new AdType("Мебель", "для кухни", true);
-
+        adTypeDto = new AdTypeDto();
+        adTypeDto.setCategory("Мебель");
+        adTypeDto.setClassification("стулья");
+        adTypeDto.setBuyOrSale(true);
     }
-//
-//    @Test
-//    public void aSave() {
-//        id = adTypeService.saveAdType(adType);
-//    }
-//
-//    @Test
-//    public void bgetAdTypeById() {
-//        AdType adTypeFromDb = adTypeService.getAdTypeById(id);
-//        assertEquals("для кухни", adTypeFromDb.getClassification());
-//    }
-//
-//    @Test
-//    public void updateAndDeleteAdType() {
-//        adType.setId(id);
-//        adType.setCategory("Авто");
-//        adTypeService.updateAdType(adType);
-//        adTypeService.deleteAdType(adType);
-//    }
-//
-//    @Test
-//    public void cGetAllAdTypes() {
-//        List<AdType> adTypeList = adTypeService.getAllAdTypes();
-//        assertNotNull(adTypeList);
-//    }
+
+    @Test
+    public void aSave() {
+        id = adTypeService.saveAdType(adTypeDto);
+    }
+
+    @Test
+    public void bgetAdTypeById() {
+        AdTypeDto adTypeDtoFromDb = adTypeService.getAdTypeById(id);
+        assertEquals("стулья", adTypeDtoFromDb.getClassification());
+    }
+
+    @Test
+    public void updateAndDeleteAdType() {
+        adTypeDto.setId(id);
+        adTypeDto.setCategory("Авто");
+        adTypeService.updateAdType(adTypeDto);
+        adTypeService.deleteAdType(id);
+    }
+
+    @Test
+    public void cGetAllAdTypes() {
+        List<AdTypeDto> adTypeDtoList = adTypeService.getAllAdTypes();
+        assertNotNull(adTypeDtoList);
+    }
 }

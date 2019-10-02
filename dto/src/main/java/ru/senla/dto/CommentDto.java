@@ -1,12 +1,19 @@
 package ru.senla.dto;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 
 public class CommentDto {
+    @ApiModelProperty(notes = "id of comment", name = "id", example = "6")
     private Long id;
+    @ApiModelProperty(notes = "id of comment user", name = "userId", example = "10")
     private Long userId;
+    @ApiModelProperty(notes = "Comment creation date in millis", name = "commentDate", example = "1569801500000", required = true)
     private Date commentDate;
+    @ApiModelProperty(notes = "Comment message text", name = "commentMessage", example = "The price is too high")
     private String commentMessage;
+    @ApiModelProperty(notes = "id of ad", name = "adId", example = "12", required = true)
     private Long adId;
 
     public Long getAdId() {

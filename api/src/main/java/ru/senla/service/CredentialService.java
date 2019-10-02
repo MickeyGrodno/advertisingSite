@@ -17,7 +17,4 @@ public interface CredentialService {
 
     List getAllCredentials();
 
-    void writeCredentialsToCsvFromDb();
-
-    void readCredentialsFromCsvToDb();
 }

@@ -1,11 +1,20 @@
 package ru.senla.dto;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class CredentialDto {
+    @ApiModelProperty(notes = "id of credential", name = "credentialId", example = "7")
     private Long credentialId;
+    @ApiModelProperty(notes = "Login of user", name = "login", example = "Sergei_777", required = true)
     private String login;
+    @ApiModelProperty(notes = "Password of user", name = "password", example = "Mypassword1990", required = true)
     private String password;
+    @ApiModelProperty(notes = "Email of user", name = "email", example = "sergei199@mail.ru", required = true)
     private String email;
+    @ApiModelProperty(notes = "Role of user(administrator, moderator and others)", name = "role", example = "administrator",
+            required = true)
     private String role;
+    @ApiModelProperty(notes = "id of user", name = "userId", example = "7")
     private Long userId;
 
     public Long getCredentialId() {

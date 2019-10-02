@@ -18,9 +18,5 @@ public interface ChatService {
 
     List getAllChats();
 
-    void writeChatsToCsvFromDb();
-
-    void readChatsFromCsvToDb();
-
     List<String> getUserChatNames(Long userId);
 }

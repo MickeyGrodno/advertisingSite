@@ -1,12 +1,19 @@
 package ru.senla.dto;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 
 public class MessageDto {
+    @ApiModelProperty(notes = "id of message", name = "id", example = "7")
     private Long id;
+    @ApiModelProperty(notes = "id of chat", name = "chatId", example = "5", required = true)
     private Long chatId;
+    @ApiModelProperty(notes = "User of message", name = "userDto", example = "7" ,required = true)
     private UserDto userDto;
+    @ApiModelProperty(notes = "Text of message", name = "text", example = "Hello!", required = true)
     private String text;
+    @ApiModelProperty(notes = "Message creation date in millis", name = "messageDate", example = "1569801500000", required = true)
     private Date messageDate;
 
     public Long getId() {

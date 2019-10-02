@@ -20,7 +20,10 @@ import ru.senla.entity.Credential;
 import ru.senla.entity.User;
 import ru.senla.service.AdService;
 import ru.senla.service.AdTypeService;
+import ru.senla.service.CredentialService;
+import ru.senla.service.UserService;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,10 +39,16 @@ public class AdServiceTest {
     @Autowired
     private AdService adService;
     @Autowired
-    private  AdTypeService adTypeService;
+    private AdTypeService adTypeService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private CredentialService credentialService;
 
     private static AdDto adDto;
     private static Long adId;
+    private static Long userId;
+    private static Long credentialId;
     private static AdTypeDto adTypeDto;
     private static UserDto userDto;
     private static CredentialDto credentialDto;
@@ -56,8 +65,6 @@ public class AdServiceTest {
         userDto.setGender(true);
         userDto.setBirthDate(new Date());
         userDto.setUserRating(15);
-        userDto.setCredentialId(1L);
-
 
         adTypeDto = new AdTypeDto();
         adTypeDto.setBuyOrSale(true);
@@ -70,7 +77,7 @@ public class AdServiceTest {
         credentialDto.setPassword("mypassword");
         credentialDto.setRole("admin");
 
-        adDto.setUserDto(userDto);
+
         adDto.setAdTypeDto(adTypeDto);
         adDto.setAdMessage("Test adDto");
         adDto.setAdDate(new Date());
@@ -79,32 +86,42 @@ public class AdServiceTest {
 
     @Test
     public void aSave() {
+        credentialId = credentialService.saveCredential(credentialDto);
+        userDto.setCredentialId(credentialId);
+        adDto.setUserDto(userDto);
+        userId = userService.saveUser(userDto);
+        userDto.setId(userId);
+        adDto.setUserDto(userDto);
         adId = adService.saveAd(adDto);
     }
 
     @Test
     public void bGetByUserId(){
-        List<AdDto> ads = adService.getAdsByUserId((long) 3);
-        assertNotNull(ads);
+
+        List<AdDto> adList = adService.getAllAds();
+        userId = adList.get(0).getUserDto().getId();
+        List<AdDto> ads = adService.getAdsByUserId(userId);
+        assertTrue(ads.size() > 0);
     }
     @Test
     public void searchByAdMessageText() {
-        List<AdDto> adDtoList = adService.searchByAdMessageText("Test");
+        List<AdDto> adDtoList = adService.searchByAdMessageText("Test adDto");
         assertTrue(adDtoList.size() > 0);
     }
 
-//    @Test
-//    public void searchAdByAdType() {
-//
-//        List<AdDto> adDtoList = adService.searchAdByAdType(adTypeId);
-//        assertTrue(adDtoList.size() > 0);
-//    }
-//
-//    @Test
-//    public void searchAdByUserLogin() {
-//        List<AdDto> adDtoList = adService.searchAdByUserLogin("MyLogin");
-//        assertTrue(adDtoList.size() > 0);
-//    }
+    @Test
+    public void searchAdByAdType() {
+
+        List<AdTypeDto> adTypeList = adTypeService.getAllAdTypes();
+        List<AdDto> adDtoList = adService.searchAdByAdType(adTypeList.get(0).getId());
+        assertTrue(adDtoList.size() > 0);
+    }
+
+    @Test
+    public void searchAdByUserLogin() {
+        List<AdDto> adDtoList = adService.searchAdByUserLogin("MyLogin");
+        assertTrue(adDtoList.size() > 0);
+    }
     @Test
     public void getAdById() {
         AdDto adDto = adService.getAdById(adId);

@@ -4,9 +4,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import reflection.interfaces.CsvReader;
-import reflection.interfaces.CsvWriter;
 import ru.senla.dao.entityDao.CredentialDao;
+import ru.senla.dao.entityDao.UserDao;
 import ru.senla.dto.CredentialDto;
 import ru.senla.entity.Credential;
 import ru.senla.service.CredentialService;
@@ -21,17 +20,16 @@ public class CredentialServiceImpl implements CredentialService {
 
     private static final Logger LOGGER = LogManager.getLogger(CredentialServiceImpl.class.getName());
     private final CredentialDao credentialDao;
-    private final CsvWriter csvWriter;
-    private final CsvReader csvReader;
     private final EntityToDtoConverter entityToDtoConverter;
+    private final UserDao userDao;
 
     @Autowired
-    public CredentialServiceImpl(CredentialDao credentialDao, CsvWriter csvWriter, CsvReader csvReader,
-                                 EntityToDtoConverter entityToDtoConverter) {
+    public CredentialServiceImpl(CredentialDao credentialDao,
+                                 EntityToDtoConverter entityToDtoConverter, UserDao userDao) {
         this.credentialDao = credentialDao;
-        this.csvWriter = csvWriter;
-        this.csvReader = csvReader;
         this.entityToDtoConverter = entityToDtoConverter;
+        this.userDao = userDao;
+
     }
 
     public CredentialDto getCredentialById(Long id) {
@@ -43,6 +41,11 @@ public class CredentialServiceImpl implements CredentialService {
 
     public Long saveCredential(CredentialDto credentialDto) {
         Credential credential = entityToDtoConverter.credentialDtoToCredential(credentialDto);
+//        if (credentialDto.getUserId() != null) {
+//            User user = (User) userDao.load(credentialDto.getUserId());
+//            user.setCredential(credential);
+//            credential.setUser(user);
+//        }
         Long id = (Long) credentialDao.create(credential);
         LOGGER.info(() -> " Credential with UserId: " + id + "saved in DB");
         return id;
@@ -55,7 +58,7 @@ public class CredentialServiceImpl implements CredentialService {
     }
 
     public void deleteCredential(Long id) {
-        Credential credential = (Credential) credentialDao.read(id);
+        Credential credential = (Credential) credentialDao.load(id);
         credentialDao.delete(credential);
         LOGGER.info(() -> " Credential with UserId: " + credential.getCredentialId() + " was deleted");
     }
@@ -65,18 +68,5 @@ public class CredentialServiceImpl implements CredentialService {
         List<CredentialDto> adDtoList = entityToDtoConverter.credentialListToCredentialDtoList(ads);
         LOGGER.info(() -> "all credentials have gotten from DB");
         return adDtoList;
-    }
-
-    public void writeCredentialsToCsvFromDb() {
-        csvWriter.writeToCsvFile(getAllCredentials());
-        LOGGER.info(() -> "all credentials saved to CSV");
-    }
-
-    public void readCredentialsFromCsvToDb() {
-        List<Credential> credentials = (List<Credential>) csvReader.readerFromCsv(Credential.class);
-        for (Credential credential : credentials) {
-            credentialDao.saveOrUpdate(credential);
-        }
-        LOGGER.info(() -> "all credentials saved to DB");
     }
 }

@@ -9,6 +9,8 @@ public interface AbstractDao<T, PK extends Serializable> {
 
     T read(PK id);
 
+    T load(PK id);
+
     void update(T transientObject);
 
     void delete(T persistentObject);

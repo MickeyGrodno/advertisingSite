@@ -4,12 +4,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import reflection.interfaces.CsvReader;
-import reflection.interfaces.CsvWriter;
 import ru.senla.dao.entityDao.AdTypeDao;
 import ru.senla.dto.AdTypeDto;
 import ru.senla.entity.AdType;
 import ru.senla.service.AdTypeService;
+import ru.senla.service.EntityToDtoConverter;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -20,16 +19,12 @@ public class AdTypeServiceImpl implements AdTypeService {
 
     private static final Logger LOGGER = LogManager.getLogger(AdTypeServiceImpl.class.getName());
     private final AdTypeDao adTypeDao;
-    private final CsvWriter csvWriter;
-    private final CsvReader csvReader;
-    private final EntityToDtoConverterImpl entityToDtoConverter;
+    private final EntityToDtoConverter entityToDtoConverter;
 
     @Autowired
-    public AdTypeServiceImpl(AdTypeDao adTypeDao, CsvWriter csvWriter, CsvReader csvReader,
-                             EntityToDtoConverterImpl entityToDtoConverter) {
+    public AdTypeServiceImpl(AdTypeDao adTypeDao,
+                             EntityToDtoConverter entityToDtoConverter) {
         this.adTypeDao = adTypeDao;
-        this.csvWriter = csvWriter;
-        this.csvReader = csvReader;
         this.entityToDtoConverter = entityToDtoConverter;
     }
 
@@ -54,7 +49,7 @@ public class AdTypeServiceImpl implements AdTypeService {
     }
 
     public void deleteAdType(Long id) {
-        AdType adType = (AdType) adTypeDao.read(id);
+        AdType adType = (AdType) adTypeDao.load(id);
         adTypeDao.delete(adType);
         LOGGER.info(() -> " adType with id: " + id + " was deleted");
     }
@@ -65,17 +60,5 @@ public class AdTypeServiceImpl implements AdTypeService {
         LOGGER.info(() -> "all adTypes have gotten from DB");
         return adTypeDtoList;
     }
-
-    public void writeAdTypesToCsvFromDb() {
-        csvWriter.writeToCsvFile(getAllAdTypes());
-        LOGGER.info(() -> "all users saved to CSV");
-    }
-
-    public void readAdTypesFromCsvToDb() {
-        List<AdType> AdTypes = (List<AdType>) csvReader.readerFromCsv(AdType.class);
-        for (Object adType : AdTypes) {
-            adTypeDao.saveOrUpdate(adType);
-        }
-        LOGGER.info(() -> "all users saved to DB");
-    }
 }
+

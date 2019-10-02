@@ -32,6 +32,10 @@ public class AbstractDaoImpl<T, PK extends Serializable>
         return factory.getCurrentSession().get(type, id);
     }
 
+    public T load(PK id) {
+        return factory.getCurrentSession().load(type, id);
+    }
+
     public void update(T o) {
         factory.getCurrentSession().update(o);
     }

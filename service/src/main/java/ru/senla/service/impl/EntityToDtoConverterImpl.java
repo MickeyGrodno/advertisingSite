@@ -31,7 +31,9 @@ public class EntityToDtoConverterImpl implements EntityToDtoConverter {
         userDto.setLastName(user.getLastName());
         userDto.setGender(user.isGender());
         userDto.setUserRating(user.getUserRating());
-        userDto.setCredentialId(user.getCredentialId());
+        if (user.getCredential() != null) {
+            userDto.setCredentialId(user.getCredential().getCredentialId());
+        }
         return userDto;
     }
 
@@ -46,7 +48,6 @@ public class EntityToDtoConverterImpl implements EntityToDtoConverter {
         user.setLastName(userDto.getLastName());
         user.setGender(userDto.isGender());
         user.setUserRating(userDto.getUserRating());
-        user.setCredentialId(userDto.getCredentialId());
         return user;
     }
 
@@ -74,10 +75,13 @@ public class EntityToDtoConverterImpl implements EntityToDtoConverter {
     public CommentDto commentToCommentDto(Comment comment) {
         CommentDto commentDto = new CommentDto();
         commentDto.setId(comment.getId());
-        commentDto.setUserId(comment.getUser().getId());
+        User user = comment.getUser();
+        commentDto.setUserId(user.getId());
         commentDto.setCommentDate(comment.getCommentDate());
         commentDto.setCommentMessage(comment.getCommentMessage());
-        commentDto.setAdId(comment.getAd().getId());
+        if (comment.getAd() != null) {
+            commentDto.setAdId(comment.getAd().getId());
+        }
         return commentDto;
     }
 
@@ -151,7 +155,7 @@ public class EntityToDtoConverterImpl implements EntityToDtoConverter {
 
     public List<Credential> credentialDtoListToCredentialList(List<CredentialDto> credentialDtoList) {
         List<Credential> credentialList = new ArrayList<>();
-        for(CredentialDto credentialDto : credentialDtoList) {
+        for (CredentialDto credentialDto : credentialDtoList) {
             Credential credential = credentialDtoToCredential(credentialDto);
             credentialList.add(credential);
         }
@@ -169,7 +173,7 @@ public class EntityToDtoConverterImpl implements EntityToDtoConverter {
 
     public List<AdTypeDto> adTypeListToAdTypeDtoList(List<AdType> adTypeList) {
         List<AdTypeDto> adTypeDtoList = new ArrayList<>();
-        for(AdType adType : adTypeList) {
+        for (AdType adType : adTypeList) {
             AdTypeDto adTypeDto = adTypeToAdTypeDto(adType);
             adTypeDtoList.add(adTypeDto);
         }
@@ -178,7 +182,7 @@ public class EntityToDtoConverterImpl implements EntityToDtoConverter {
 
     public List<AdType> adTypeDtoListToAdTypeList(List<AdTypeDto> adTypeDtoList) {
         List<AdType> adTypeList = new ArrayList<>();
-        for(AdTypeDto adTypeDto : adTypeDtoList) {
+        for (AdTypeDto adTypeDto : adTypeDtoList) {
             AdType adType = adTypeDtoToAdType(adTypeDto);
             adTypeList.add(adType);
         }
@@ -187,7 +191,7 @@ public class EntityToDtoConverterImpl implements EntityToDtoConverter {
 
     public List<Message> messageDtoListToMessageList(List<MessageDto> messageDtoList) {
         List<Message> messageList = new ArrayList<>();
-        for(MessageDto messageDto :messageDtoList) {
+        for (MessageDto messageDto : messageDtoList) {
             Message message = messageDtoToMessage(messageDto);
             messageList.add(message);
         }
@@ -196,7 +200,7 @@ public class EntityToDtoConverterImpl implements EntityToDtoConverter {
 
     public List<MessageDto> messageListToMessageDtoList(List<Message> messageList) {
         List<MessageDto> messageDtoList = new ArrayList<>();
-        for(Message message :messageList) {
+        for (Message message : messageList) {
             MessageDto messageDto = messageToMessageDto(message);
             messageDtoList.add(messageDto);
         }
@@ -205,7 +209,7 @@ public class EntityToDtoConverterImpl implements EntityToDtoConverter {
 
     public List<User> userDtoListToUserList(List<UserDto> userDtoList) {
         List<User> userList = new ArrayList<>();
-        for(UserDto userDto : userDtoList) {
+        for (UserDto userDto : userDtoList) {
             User user = userDtoToUser(userDto);
             userList.add(user);
         }
@@ -214,7 +218,7 @@ public class EntityToDtoConverterImpl implements EntityToDtoConverter {
 
     public List<UserDto> userListToUserDtoList(List<User> userList) {
         List<UserDto> userDtoList = new ArrayList<>();
-        for(User user : userList) {
+        for (User user : userList) {
             UserDto userDto = userToUserDto(user);
             userDtoList.add(userDto);
         }
@@ -223,7 +227,7 @@ public class EntityToDtoConverterImpl implements EntityToDtoConverter {
 
     public List<Chat> chatDtoListToChatList(List<ChatDto> chatDtoList) {
         List<Chat> chatList = new ArrayList<>();
-        for(ChatDto chatDto : chatDtoList) {
+        for (ChatDto chatDto : chatDtoList) {
             Chat chat = chatDtoToChat(chatDto);
             chatList.add(chat);
         }
@@ -232,7 +236,7 @@ public class EntityToDtoConverterImpl implements EntityToDtoConverter {
 
     public List<ChatDto> chatListToChatDtoList(List<Chat> chatList) {
         List<ChatDto> chatDtoList = new ArrayList<>();
-        for(Chat chat : chatList) {
+        for (Chat chat : chatList) {
             ChatDto chatDto = chatToChatDto(chat);
             chatDtoList.add(chatDto);
         }
@@ -246,7 +250,9 @@ public class EntityToDtoConverterImpl implements EntityToDtoConverter {
         credentialDto.setLogin(credential.getLogin());
         credentialDto.setPassword(credential.getPassword());
         credentialDto.setEmail(credential.getEmail());
-        credentialDto.setUserId(credential.getUserId());
+       if (credential.getUser() != null){
+           credentialDto.setUserId(credential.getUser().getId());
+       }
         credentialDto.setRole(credential.getRole());
         return credentialDto;
     }
@@ -257,7 +263,6 @@ public class EntityToDtoConverterImpl implements EntityToDtoConverter {
         credential.setLogin(credentialDto.getLogin());
         credential.setPassword(credentialDto.getPassword());
         credential.setEmail(credentialDto.getEmail());
-        credential.setUserId(credentialDto.getUserId());
         credential.setRole(credentialDto.getRole());
         return credential;
     }
@@ -285,7 +290,10 @@ public class EntityToDtoConverterImpl implements EntityToDtoConverter {
         Chat chat = new Chat();
         chat.setId(chatDto.getId());
         chat.setChatName(chatDto.getChatName());
-        chat.setUserList(userDtoListToUserList(chatDto.getUserDtoList()));
+        if (chatDto.getUserDtoList() != null) {
+            chat.setUserList(userDtoListToUserList(chatDto.getUserDtoList()));
+        }
+
         return chat;
     }
 

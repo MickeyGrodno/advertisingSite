@@ -17,7 +17,4 @@ public interface CommentService {
 
     List<CommentDto> getAllComments();
 
-    void writeCommentsToCsvFromDb();
-
-    void readCommentsFromCsvToDb();
 }
