@@ -45,18 +45,18 @@ public class CredentialServiceTest {
     }
 
     @Test
-    public void aSave() {
+    public void test1Save() {
         id = credentialService.saveCredential(credentialDto);
     }
 
     @Test
-    public void getCredentialById() {
+    public void test2getCredentialById() {
         CredentialDto credentialDtoFromDb = credentialService.getCredentialById(id);
         assertEquals("Login", credentialDtoFromDb.getLogin());
     }
 
     @Test
-    public void updateAndDeleteCredential() {
+    public void test4updateAndDeleteCredential() {
         credentialDto.setCredentialId(id);
         credentialDto.setLogin("NotMyLogin");
         credentialService.updateCredential(credentialDto);
@@ -64,7 +64,7 @@ public class CredentialServiceTest {
     }
 
     @Test
-    public void getAllCredentials() {
+    public void test3getAllCredentials() {
         List<CredentialDto> credentialDtoList = credentialService.getAllCredentials();
         assertNotNull(credentialDtoList);
     }

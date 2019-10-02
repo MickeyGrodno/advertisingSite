@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -69,69 +70,67 @@ public class ChatServiceTest {
         userDto.setGender(true);
         userDto.setBirthDate(new Date());
         userDto.setUserRating(15);
-        userDto.setCredentialId(1L);
 
         credentialDto = new CredentialDto();
         credentialDto.setEmail("saaaa@mail.ru");
         credentialDto.setLogin("Login7");
         credentialDto.setPassword("mypassword");
         credentialDto.setRole("admin");
+        messageDto = new MessageDto();
+        chatDto = new ChatDto();
 
+    }
+
+    @Test
+    public void test1Save() {
         List<UserDto> userDtoList = new ArrayList<>();
         List<MessageDto> messageDtoList = new ArrayList<>();
-        messageDto = new MessageDto();
 
-        chatDto = new ChatDto();
-//        userDtoList.add(userDto);
+        credentialId = credentialService.saveCredential(credentialDto);
+        credentialDto.setCredentialId(credentialId);
+        userDto.setCredentialId(credentialId);
+        userId = userService.saveUser(userDto);
+        credentialDto.setUserId(userId);
+        userDto.setId(userId);
+        userDtoList.add(userDto);
         messageDto.setUserDto(userDto);
         messageDto.setMessageDate(new Date());
         messageDto.setText("Test text");
-//        messageDtoList.add(messageDto);
+        messageDtoList.add(messageDto);
         chatDto.setChatName("Chat 1");
         chatDto.setUserDtoList(userDtoList);
         chatDto.setMessageDtoList(messageDtoList);
-    }
-
-    @Test
-    public void aSave() {
-        credentialId = credentialService.saveCredential(credentialDto);
-        userDto.setCredentialId(credentialId);
-        userId = userService.saveUser(userDto);
-//        credentialDto.setUserId(userId);
-        userDto.setId(userId);
-        chatDto.getUserDtoList().add(userDto);
         chatId = chatService.saveChat(chatDto);
-
     }
 
     @Test
-    public void bGetChatById() {
+    public void test2GetChatById() {
         ChatDto chatFromDb = chatService.getChatById(chatId);
         assertEquals("Chat 1", chatFromDb.getChatName());
     }
 
     @Test
-    public void getChatNames() {
+    public void test3getChatNames() {
         userDto.setId(userId);
         List<String> chatNames = chatService.getUserChatNames(userId);
-        assertTrue(chatNames.size() > 0);
+        assertEquals("Chat 1", chatNames.get(0));
     }
 
     @Test
-    public void updateChat() {
+    public void test4updateChat() {
         chatDto.setId(chatId);
         chatDto.setChatName("Chat 2");
         chatService.updateChat(chatDto);
     }
 
     @Test
-    public void getAllChats() {
+    public void test5getAllChats() {
         List<Chat> chatList = chatService.getAllChats();
         assertNotNull(chatList);
     }
 
     @Test
-    public void zDelete() {
+    public void test6Delete() {
         chatService.deleteChat(chatId);
         userService.deleteUser(userId);
         credentialService.deleteCredential(credentialId);

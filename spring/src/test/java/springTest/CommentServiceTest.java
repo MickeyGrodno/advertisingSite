@@ -112,7 +112,7 @@ public class CommentServiceTest {
     }
 
     @Test
-    public void aSave() {
+    public void test1Save() {
 
         adTypeId = adTypeService.saveAdType(adTypeDto);
         credentialId = credentialService.saveCredential(credentialDto);
@@ -129,19 +129,19 @@ public class CommentServiceTest {
     }
 
     @Test
-    public void getCommentById() {
+    public void test2getCommentById() {
         CommentDto commentFromDb = commentService.getCommentById(commentId);
         assertEquals("Comment 1", commentFromDb.getCommentMessage());
     }
 
     @Test
-    public void getAllComments() {
+    public void test3getAllComments() {
         List<CommentDto> commentDtoList = commentService.getAllComments();
         assertTrue(commentDtoList.size() > 0);
     }
 
     @Test
-    public void updateAndDeleteComment() {
+    public void test4updateAndDeleteComment() {
         commentDto.setId(commentId);
         commentDto.setCommentMessage("Comment 2");
         commentService.updateComment(commentDto);
@@ -149,6 +149,5 @@ public class CommentServiceTest {
         adService.deleteAd(adId);
         adTypeService.deleteAdType(adTypeId);
         userService.deleteUser(userId);
-        credentialService.deleteCredential(credentialId);
     }
 }

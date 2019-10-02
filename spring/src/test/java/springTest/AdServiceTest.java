@@ -54,8 +54,6 @@ public class AdServiceTest {
     private static CredentialDto credentialDto;
     private static Long adTypeId;
 
-
-
     @BeforeClass
     public static void createTestData() {
 
@@ -77,7 +75,6 @@ public class AdServiceTest {
         credentialDto.setPassword("mypassword");
         credentialDto.setRole("admin");
 
-
         adDto.setAdTypeDto(adTypeDto);
         adDto.setAdMessage("Test adDto");
         adDto.setAdDate(new Date());
@@ -85,7 +82,7 @@ public class AdServiceTest {
     }
 
     @Test
-    public void aSave() {
+    public void test1Save() {
         credentialId = credentialService.saveCredential(credentialDto);
         userDto.setCredentialId(credentialId);
         adDto.setUserDto(userDto);
@@ -96,7 +93,7 @@ public class AdServiceTest {
     }
 
     @Test
-    public void bGetByUserId(){
+    public void test2GetByUserId(){
 
         List<AdDto> adList = adService.getAllAds();
         userId = adList.get(0).getUserDto().getId();
@@ -104,13 +101,13 @@ public class AdServiceTest {
         assertTrue(ads.size() > 0);
     }
     @Test
-    public void searchByAdMessageText() {
+    public void test3searchByAdMessageText() {
         List<AdDto> adDtoList = adService.searchByAdMessageText("Test adDto");
         assertTrue(adDtoList.size() > 0);
     }
 
     @Test
-    public void searchAdByAdType() {
+    public void test4searchAdByAdType() {
 
         List<AdTypeDto> adTypeList = adTypeService.getAllAdTypes();
         List<AdDto> adDtoList = adService.searchAdByAdType(adTypeList.get(0).getId());
@@ -118,27 +115,30 @@ public class AdServiceTest {
     }
 
     @Test
-    public void searchAdByUserLogin() {
+    public void test5searchAdByUserLogin() {
         List<AdDto> adDtoList = adService.searchAdByUserLogin("MyLogin");
-        assertTrue(adDtoList.size() > 0);
+        assertNotNull(adDtoList);
     }
     @Test
-    public void getAdById() {
+    public void test6getAdById() {
         AdDto adDto = adService.getAdById(adId);
         adTypeId = adDto.getAdTypeDto().getId();
         assertNotNull(adDto);
     }
 
     @Test
-    public void zupdateAndDeleteAd() {
+    public void test8updateAndDeleteAd() {
         adDto.setId(adId);
         adDto.setAdMessage("new test Message");
         adService.updateAd(adDto);
         adService.deleteAd(adId);
+        List<AdTypeDto> adTypeDtoList = adTypeService.getAllAdTypes();
+        adTypeService.deleteAdType(adTypeDtoList.get(0).getId());
+        credentialService.deleteCredential(credentialId);
     }
 
     @Test
-    public void getAllAds() {
+    public void test7getAllAds() {
         List<AdDto> adDtoList = adService.getAllAds();
         assertNotNull(adDtoList);
     }

@@ -43,18 +43,18 @@ public class AdTypeServiceTest {
     }
 
     @Test
-    public void aSave() {
+    public void test1Save() {
         id = adTypeService.saveAdType(adTypeDto);
     }
 
     @Test
-    public void bgetAdTypeById() {
+    public void test2getAdTypeById() {
         AdTypeDto adTypeDtoFromDb = adTypeService.getAdTypeById(id);
         assertEquals("стулья", adTypeDtoFromDb.getClassification());
     }
 
     @Test
-    public void updateAndDeleteAdType() {
+    public void test4updateAndDeleteAdType() {
         adTypeDto.setId(id);
         adTypeDto.setCategory("Авто");
         adTypeService.updateAdType(adTypeDto);
@@ -62,7 +62,7 @@ public class AdTypeServiceTest {
     }
 
     @Test
-    public void cGetAllAdTypes() {
+    public void test3GetAllAdTypes() {
         List<AdTypeDto> adTypeDtoList = adTypeService.getAllAdTypes();
         assertNotNull(adTypeDtoList);
     }
