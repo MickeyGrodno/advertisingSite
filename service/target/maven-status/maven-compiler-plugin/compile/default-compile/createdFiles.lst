@@ -1,8 +1,0 @@
-ru\senla\service\impl\MessageServiceImpl.class
-ru\senla\service\impl\AdTypeServiceImpl.class
-ru\senla\service\impl\CredentialServiceImpl.class
-ru\senla\service\impl\ChatServiceImpl.class
-ru\senla\service\impl\AdServiceImpl.class
-ru\senla\service\impl\CommentServiceImpl.class
-ru\senla\service\impl\UserServiceImpl.class
-ru\senla\service\impl\EntityToDtoConverterImpl.class
