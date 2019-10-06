@@ -1,0 +1,7 @@
+ru\senla\controller\AdController.class
+ru\senla\controller\ChatController.class
+ru\senla\controller\CommentController.class
+ru\senla\controller\CredentialController.class
+ru\senla\controller\AdTypeController.class
+ru\senla\controller\MessageController.class
+ru\senla\controller\UserController.class

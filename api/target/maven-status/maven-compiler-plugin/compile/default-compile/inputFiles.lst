@@ -1,0 +1,16 @@
+E:\CoursesJava\api\src\main\java\ru\senla\service\AdService.java
+E:\CoursesJava\api\src\main\java\ru\senla\service\CredentialService.java
+E:\CoursesJava\api\src\main\java\ru\senla\service\ChatService.java
+E:\CoursesJava\api\src\main\java\ru\senla\dao\entityDao\AdDao.java
+E:\CoursesJava\api\src\main\java\ru\senla\dao\entityDao\CommentDao.java
+E:\CoursesJava\api\src\main\java\ru\senla\service\AdTypeService.java
+E:\CoursesJava\api\src\main\java\ru\senla\service\MessageService.java
+E:\CoursesJava\api\src\main\java\ru\senla\dao\entityDao\CredentialDao.java
+E:\CoursesJava\api\src\main\java\ru\senla\dao\entityDao\UserDao.java
+E:\CoursesJava\api\src\main\java\ru\senla\dao\entityDao\MessageDao.java
+E:\CoursesJava\api\src\main\java\ru\senla\dao\entityDao\AdTypeDao.java
+E:\CoursesJava\api\src\main\java\ru\senla\dao\entityDao\ChatDao.java
+E:\CoursesJava\api\src\main\java\ru\senla\service\EntityToDtoConverter.java
+E:\CoursesJava\api\src\main\java\ru\senla\service\CommentService.java
+E:\CoursesJava\api\src\main\java\ru\senla\service\UserService.java
+E:\CoursesJava\api\src\main\java\ru\senla\dao\AbstractDao.java

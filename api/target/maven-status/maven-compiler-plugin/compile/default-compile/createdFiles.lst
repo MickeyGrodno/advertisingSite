@@ -1,0 +1,16 @@
+ru\senla\service\MessageService.class
+ru\senla\service\ChatService.class
+ru\senla\service\EntityToDtoConverter.class
+ru\senla\service\UserService.class
+ru\senla\service\CredentialService.class
+ru\senla\dao\entityDao\MessageDao.class
+ru\senla\service\AdTypeService.class
+ru\senla\service\AdService.class
+ru\senla\dao\entityDao\CommentDao.class
+ru\senla\dao\entityDao\AdDao.class
+ru\senla\dao\entityDao\ChatDao.class
+ru\senla\dao\entityDao\AdTypeDao.class
+ru\senla\dao\entityDao\UserDao.class
+ru\senla\service\CommentService.class
+ru\senla\dao\entityDao\CredentialDao.class
+ru\senla\dao\AbstractDao.class

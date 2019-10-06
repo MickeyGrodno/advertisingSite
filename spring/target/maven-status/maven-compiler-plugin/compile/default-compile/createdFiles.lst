@@ -1,0 +1,8 @@
+ru\senla\security\CustomDetailsService.class
+ru\senla\context\AppConfig.class
+ru\senla\security\SecurityConfiguration.class
+ru\senla\security\SpringSecurityInitializer.class
+ru\senla\webconfig\MyWebAppInitializer.class
+ru\senla\webconfig\MvcConfig.class
+ru\senla\context\HibernateConf.class
+ru\senla\security\OAuth2Config.class
