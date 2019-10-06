@@ -1,5 +1,7 @@
 package ru.senla.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.senla.dto.AdDto;
 import ru.senla.dto.AdTypeDto;
@@ -22,6 +24,9 @@ import java.util.List;
 
 @Service
 public class EntityToDtoConverterImpl implements EntityToDtoConverter {
+
+    @Autowired
+    private PasswordEncoder encoder;
 
     public UserDto userToUserDto(User user) {
         UserDto userDto = new UserDto();
@@ -250,9 +255,9 @@ public class EntityToDtoConverterImpl implements EntityToDtoConverter {
         credentialDto.setLogin(credential.getLogin());
         credentialDto.setPassword(credential.getPassword());
         credentialDto.setEmail(credential.getEmail());
-       if (credential.getUser() != null){
-           credentialDto.setUserId(credential.getUser().getId());
-       }
+        if (credential.getUser() != null) {
+            credentialDto.setUserId(credential.getUser().getId());
+        }
         credentialDto.setRole(credential.getRole());
         return credentialDto;
     }
@@ -261,7 +266,8 @@ public class EntityToDtoConverterImpl implements EntityToDtoConverter {
         Credential credential = new Credential();
         credential.setCredentialId(credentialDto.getCredentialId());
         credential.setLogin(credentialDto.getLogin());
-        credential.setPassword(credentialDto.getPassword());
+        String enc = encoder.encode(credentialDto.getPassword());
+        credential.setPassword(enc);
         credential.setEmail(credentialDto.getEmail());
         credential.setRole(credentialDto.getRole());
         return credential;

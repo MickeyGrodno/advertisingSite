@@ -45,37 +45,4 @@ public class UserController {
     public void deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
     }
-
-
-
-//    private AdService adService;
-//    private AdTypeService adTypeService;
-//
-//    @Autowired
-//    public void setAdTypeService(AdTypeService adTypeService) {
-//        this.adTypeService = adTypeService;
-//    }
-//
-//    @Autowired
-//    public void setAdService(AdService adService) {
-//        this.adService = adService;
-//    }
-//
-//    @GetMapping("/getAdList")
-//    public List<Ad>  getAdList(){
-//        List<Ad> result = adService.getAllAds();
-//        return result;
-//    }
-//    @GetMapping("/getAd/{id}")
-//    public Ad getAd(@PathVariable Long id){
-//        Ad ad = adService.getAdById(id);
-//        return ad;
-//    }
-//
-//    @PostMapping(value = "/addAd", consumes = MediaType.APPLICATION_JSON_VALUE,
-//            produces = MediaType.APPLICATION_JSON_VALUE)
-//    public Long getAd(@RequestBody Ad ad){
-//
-//         return adService.saveAd(ad);
-//    }
 }

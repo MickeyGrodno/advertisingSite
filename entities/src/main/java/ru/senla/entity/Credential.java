@@ -21,7 +21,7 @@ public class Credential implements Serializable {
     @Column(name = "login", unique = true, nullable = false, length = 45)
     private String login;
 
-    @Column(name = "password", nullable = false, length = 45)
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Column(name = "email", unique = true, nullable = false, length = 45)

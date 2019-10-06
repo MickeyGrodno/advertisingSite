@@ -13,7 +13,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("ru.senla.controller")
+@ComponentScan({"ru.senla.controller", "ru.senla.security"})
 @EnableSwagger2
 public class MvcConfig implements WebMvcConfigurer {
 

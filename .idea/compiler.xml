@@ -12,6 +12,7 @@
         <module name="dao" />
         <module name="entities" />
         <module name="service" />
+        <module name="dto" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -19,8 +20,10 @@
       <module name="controllers" target="1.8" />
       <module name="CoursesJava" target="1.5" />
       <module name="dao" target="1.8" />
+      <module name="dto" target="1.8" />
       <module name="entities" target="1.8" />
       <module name="service" target="1.8" />
+      <module name="shabalin_siarhei" target="1.5" />
       <module name="spring" target="1.8" />
     </bytecodeTargetLevel>
   </component>

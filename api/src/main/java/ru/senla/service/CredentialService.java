@@ -17,4 +17,6 @@ public interface CredentialService {
 
     List getAllCredentials();
 
+    Credential getCredentialByLogin(String login);
+
 }

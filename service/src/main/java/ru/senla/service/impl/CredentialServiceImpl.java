@@ -39,6 +39,10 @@ public class CredentialServiceImpl implements CredentialService {
         return credentialDto;
     }
 
+    public Credential getCredentialByLogin(String login){
+        return credentialDao.getCredentialByLogin(login);
+    }
+
     public Long saveCredential(CredentialDto credentialDto) {
         Credential credential = entityToDtoConverter.credentialDtoToCredential(credentialDto);
 //        if (credentialDto.getUserId() != null) {

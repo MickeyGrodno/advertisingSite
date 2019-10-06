@@ -1,6 +1,7 @@
 package ru.senla.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ public class CredentialController {
     CredentialService credentialService;
 
     @GetMapping(value = "/all")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<CredentialDto> getAllCredentials() {
         List<CredentialDto> credentialDtoList = credentialService.getAllCredentials();
         return credentialDtoList;
