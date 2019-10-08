@@ -2,6 +2,7 @@ package ru.senla.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/credential")
-
+@EnableResourceServer
 public class CredentialController {
 
 
@@ -32,22 +33,26 @@ public class CredentialController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public CredentialDto getCredentialById(@PathVariable Long id){
         CredentialDto credentialDto = credentialService.getCredentialById(id);
         return credentialDto;
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public Long saveCredential(@RequestBody CredentialDto credentialDto){
         Long id =  credentialService.saveCredential(credentialDto);
         return id;
     }
     @PutMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public void updateCredential(@RequestBody CredentialDto credential){
         credentialService.updateCredential(credential);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public void deleteCredential(@PathVariable Long id){
         credentialService.deleteCredential(id);
     }

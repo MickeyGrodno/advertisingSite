@@ -56,10 +56,10 @@ public class UserServiceTest {
         userDto.setUserRating(15);
 
         credentialDto = new CredentialDto();
-        credentialDto.setEmail("s@mail.ru");
-        credentialDto.setLogin("Log");
+        credentialDto.setEmail("rest@mail.ru");
+        credentialDto.setLogin("Log2");
         credentialDto.setPassword("mypassword");
-        credentialDto.setRole("admin");
+        credentialDto.setRole("user");
     }
 
     @Test

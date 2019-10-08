@@ -1,6 +1,7 @@
 package ru.senla.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,34 +23,40 @@ public class MessageController {
     private MessageService messageService;
 
     @GetMapping(value = "/all")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<MessageDto> getAllMessages() {
         List<MessageDto> messageDtoList = messageService.getAllMessages();
         return messageDtoList;
     }
 
     @GetMapping(value = "/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public MessageDto getById(@PathVariable Long id) {
         MessageDto messageDto = messageService.getMessageById(id);
         return messageDto;
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public Long createMessage(@RequestBody MessageDto messageDto) {
         Long id = messageService.saveMessage(messageDto);
         return id;
     }
 
     @PutMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public void updateMessage(@RequestBody MessageDto messageDto) {
         messageService.updateMessage(messageDto);
     }
 
     @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public void deleteMessage(@PathVariable Long id) {
         messageService.deleteMessage(id);
     }
 
     @GetMapping(value = "/chat_name/{chatName}")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public List<MessageDto> getAllMessagesByChatName(@PathVariable String chatName) {
         List<MessageDto> messageDtoList = messageService.getAllMessagesByChatName(chatName);
         return messageDtoList;

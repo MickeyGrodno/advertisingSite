@@ -1,6 +1,7 @@
 package ru.senla.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,17 +36,20 @@ public class AdTypeController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Long saveAdType(@RequestBody AdTypeDto adTypeDto) {
         Long id = adTypeService.saveAdType(adTypeDto);
         return id;
     }
 
     @PutMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void updateAdType(@RequestBody AdTypeDto adTypeDto) {
         adTypeService.updateAdType(adTypeDto);
     }
     
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteAdType(@PathVariable Long id) {
         adTypeService.deleteAdType(id);
     }
