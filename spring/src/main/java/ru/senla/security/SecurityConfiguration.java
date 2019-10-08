@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -50,23 +51,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customDetailsService).passwordEncoder(encoder());
     }
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests()
-//                .and()
-//                    .authorizeRequests().antMatchers("/**").permitAll()
-//                .and()
-//                    .authorizeRequests().antMatchers("/user/**").authenticated()
-//                .and()
-//                    .sessionManagement()
-//                    .sessionCreationPolicy(SessionCreationPolicy.NEVER);
-//    }
+
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring();
+        web.ignoring().antMatchers("ad/public").
+                and().ignoring().antMatchers("ad_type/public").
+                and().ignoring().antMatchers("comment/public");
     }
+
+    protected void configure(HttpSecurity http) throws Exception {
+        http.httpBasic();
+    }
+
     @Override
-    @Bean("authenticationManagerBean")
+    @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }

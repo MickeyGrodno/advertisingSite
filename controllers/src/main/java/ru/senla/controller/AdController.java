@@ -22,7 +22,7 @@ public class AdController {
     @Autowired
     AdService adService;
 
-    @GetMapping(value = "/all")
+    @GetMapping(value = "/public/all")
     public List<AdDto> getAllAds() {
         List<AdDto> adDtoList = adService.getAllAds();
         return adDtoList;
@@ -54,25 +54,25 @@ public class AdController {
         adService.deleteAd(idAd);
     }
 
-    @GetMapping("/user_id/{id}")
+    @GetMapping("/public/user_id/{id}")
     public List<AdDto> getAdsByUserId(@PathVariable Long id) {
         List<AdDto> adDtoList = adService.getAdsByUserId(id);
         return adDtoList;
     }
 
-    @GetMapping("/user_login/{login}")
+    @GetMapping("/public/user_login/{login}")
     public List<AdDto> searchAdByUserLogin(@PathVariable String login) {
         List<AdDto> adDtoList = adService.searchAdByUserLogin(login);
         return adDtoList;
     }
 
-    @GetMapping("/ad_type/{adTypeId}")
+    @GetMapping("/public/ad_type/{adTypeId}")
     public List<AdDto> searchAdByAdType(@PathVariable Long adTypeId) {
         List<AdDto> adDtoList = adService.searchAdByAdType(adTypeId);
         return adDtoList;
     }
 
-    @GetMapping("/message_text/{text}")
+    @GetMapping("/public/message_text/{text}")
     public List<AdDto> searchByAdMessageText(@PathVariable String text) {
         List<AdDto> adDtoList = adService.searchByAdMessageText(text);
         return adDtoList;

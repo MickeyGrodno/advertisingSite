@@ -23,13 +23,14 @@ public class CommentController {
     @Autowired
     CommentService commentService;
 
-    @GetMapping(value = "/all")
+
+    @GetMapping(value = "/public/all")
     public List<CommentDto> getAlMessages() {
         List<CommentDto> commentDtoList = commentService.getAllComments();
         return commentDtoList;
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/public/{id}")
     public CommentDto getById(@PathVariable Long id) {
         CommentDto commentDto = commentService.getCommentById(id);
         return commentDto;

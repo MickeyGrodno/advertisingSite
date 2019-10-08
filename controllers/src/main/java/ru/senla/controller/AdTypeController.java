@@ -23,13 +23,13 @@ public class AdTypeController {
     @Autowired
     AdTypeService adTypeService;
 
-    @GetMapping("/all")
+    @GetMapping("/public/all")
     public List<AdTypeDto> getAllAdTypes() {
         List<AdTypeDto> adTypeDtoList = adTypeService.getAllAdTypes();
         return adTypeDtoList;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/public/{id}")
     public AdTypeDto getAdTypeById(@PathVariable Long id) {
         AdTypeDto adTypeDto = adTypeService.getAdTypeById(id);
         return adTypeDto;

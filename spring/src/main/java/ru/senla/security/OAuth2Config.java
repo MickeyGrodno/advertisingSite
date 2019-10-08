@@ -1,6 +1,5 @@
 package ru.senla.security;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,7 +24,7 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
     private final PasswordEncoder encoder;
     private final UserDetailsService customDetailsService;
 
-    public OAuth2Config(@Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager,
+    public OAuth2Config(AuthenticationManager authenticationManager,
                         PasswordEncoder encoder, UserDetailsService customDetailsService) {
         this.authenticationManager = authenticationManager;
         this.encoder = encoder;
