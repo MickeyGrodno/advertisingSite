@@ -30,27 +30,27 @@ public class ChatController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public ChatDto getChatTypeById(@PathVariable Long id) {
         ChatDto chatDto = chatService.getChatById(id);
         return chatDto;
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public Long saveChat(@RequestBody ChatDto chatDto) {
         Long id = chatService.saveChat(chatDto);
         return id;
     }
 
     @PutMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public void updateChat(@RequestBody ChatDto chatDto) {
         chatService.updateChat(chatDto);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public void deleteChat(@PathVariable Long id) {
         chatService.deleteChat(id);
     }

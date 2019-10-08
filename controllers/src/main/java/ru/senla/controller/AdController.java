@@ -29,27 +29,27 @@ public class AdController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public AdDto getAd(@PathVariable Long id) {
         AdDto adDto = adService.getAdById(id);
         return adDto;
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public Long saveAd(@RequestBody AdDto adDto) {
         Long id = adService.saveAd(adDto);
         return id;
     }
 
     @PutMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public void updateAd(@RequestBody AdDto adDto) {
         adService.updateAd(adDto);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public void deleteAd(@PathVariable(name = "id") Long idAd) {
         adService.deleteAd(idAd);
     }

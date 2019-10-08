@@ -36,20 +36,20 @@ public class CommentController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public Long createComment(@RequestBody CommentDto commentDto) {
         Long id = commentService.saveComment(commentDto);
         return id;
     }
 
     @PutMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public void updateComment(@RequestBody CommentDto commentDto) {
         commentService.updateComment(commentDto);
     }
 
     @DeleteMapping(value = "/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public void deleteComment(@PathVariable Long id) {
         commentService.deleteComment(id);
     }

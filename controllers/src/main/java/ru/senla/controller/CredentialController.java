@@ -40,19 +40,19 @@ public class CredentialController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public Long saveCredential(@RequestBody CredentialDto credentialDto){
         Long id =  credentialService.saveCredential(credentialDto);
         return id;
     }
     @PutMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public void updateCredential(@RequestBody CredentialDto credential){
         credentialService.updateCredential(credential);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public void deleteCredential(@PathVariable Long id){
         credentialService.deleteCredential(id);
     }

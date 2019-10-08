@@ -22,34 +22,34 @@ public class UserController {
     UserService userService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/all")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public List<UserDto> getAllUsers() {
         List<UserDto> userDtos = userService.getAllUsers();
         return userDtos;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public UserDto getUser(@PathVariable Long id) {
         UserDto userDto = userService.getUserById(id);
         return userDto;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/create")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public Long createUser(@RequestBody UserDto userDto) {
         Long id = userService.saveUser(userDto);
         return id;
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public void updateUser(@RequestBody UserDto userDto) {
         userService.updateUser(userDto);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{userId}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public void deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
     }
