@@ -22,6 +22,7 @@ public class CredentialServiceImpl implements CredentialService {
     private final CredentialDao credentialDao;
     private final EntityToDtoConverter entityToDtoConverter;
     private final UserDao userDao;
+    private final String credentialId = "credential with id: ";
 
     @Autowired
     public CredentialServiceImpl(CredentialDao credentialDao,
@@ -35,7 +36,7 @@ public class CredentialServiceImpl implements CredentialService {
     public CredentialDto getCredentialById(Long id) {
         Credential credential = (Credential) credentialDao.read(id);
         CredentialDto credentialDto = entityToDtoConverter.credentialToCredentialDto(credential);
-        LOGGER.info(() -> " Credential with id: " + credential.getCredentialId() + "has gotten from DB");
+        LOGGER.info(() -> credentialId + credential.getCredentialId() + "has gotten from DB");
         return credentialDto;
     }
 
@@ -46,20 +47,20 @@ public class CredentialServiceImpl implements CredentialService {
     public Long saveCredential(CredentialDto credentialDto) {
         Credential credential = entityToDtoConverter.credentialDtoToCredential(credentialDto);
         Long id = (Long) credentialDao.create(credential);
-        LOGGER.info(() -> " Credential with UserId: " + id + "saved in DB");
+        LOGGER.info(() -> credentialId + id + "saved in DB");
         return id;
     }
 
     public void updateCredential(CredentialDto credentialDto) {
         Credential credential = entityToDtoConverter.credentialDtoToCredential(credentialDto);
         credentialDao.update(credential);
-        LOGGER.info(() -> " Credential with UserId: " + credential.getCredentialId() + " was updated");
+        LOGGER.info(() -> credentialId + credential.getCredentialId() + " was updated");
     }
 
     public void deleteCredential(Long id) {
         Credential credential = (Credential) credentialDao.load(id);
         credentialDao.delete(credential);
-        LOGGER.info(() -> " Credential with UserId: " + credential.getCredentialId() + " was deleted");
+        LOGGER.info(() -> credentialId + credential.getCredentialId() + " was deleted");
     }
 
     public List getAllCredentials() {

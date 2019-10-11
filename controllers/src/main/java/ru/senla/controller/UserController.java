@@ -19,7 +19,7 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")

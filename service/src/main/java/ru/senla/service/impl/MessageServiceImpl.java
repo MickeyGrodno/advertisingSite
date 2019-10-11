@@ -23,6 +23,7 @@ public class MessageServiceImpl implements MessageService {
     private final MessageDao messageDao;
     private final EntityToDtoConverter entityToDtoConverter;
     private final ChatDao chatDao;
+    private final String messageId = "message with id: ";
 
     @Autowired
     public MessageServiceImpl(MessageDao messageDao,
@@ -35,7 +36,7 @@ public class MessageServiceImpl implements MessageService {
     public MessageDto getMessageById(Long id) {
         Message message = (Message) messageDao.read(id);
         MessageDto messageDto = entityToDtoConverter.messageToMessageDto(message);
-        LOGGER.info(() -> " Message with id: " + message.getId() + "has gotten from DB");
+        LOGGER.info(() -> messageId + message.getId() + "has gotten from DB");
         return messageDto;
     }
 
@@ -48,20 +49,20 @@ public class MessageServiceImpl implements MessageService {
         }
 
         Long id = (Long) messageDao.create(message);
-        LOGGER.info(() -> "Message with id: " + id + "saved in DB");
+        LOGGER.info(() -> messageId + id + "saved in DB");
         return id;
     }
 
     public void updateMessage(MessageDto messageDto) {
         Message message = entityToDtoConverter.messageDtoToMessage(messageDto);
         messageDao.update(message);
-        LOGGER.info(() -> " adType with id: " + message.getId() + " was updated");
+        LOGGER.info(() -> messageId + message.getId() + " was updated");
     }
 
     public void deleteMessage(Long id) {
         Message message = (Message) messageDao.load(id);
         messageDao.delete(message);
-        LOGGER.info(() -> " adType with id: " + message.getId() + " was updated");
+        LOGGER.info(() -> messageId + message.getId() + " was updated");
     }
 
     public List<MessageDto> getAllMessages() {

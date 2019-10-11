@@ -23,7 +23,7 @@ public class CredentialController {
 
 
     @Autowired
-    CredentialService credentialService;
+    private CredentialService credentialService;
 
     @GetMapping(value = "/all")
     @PreAuthorize("hasRole('ROLE_ADMIN')")

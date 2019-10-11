@@ -20,6 +20,7 @@ public class AdTypeServiceImpl implements AdTypeService {
     private static final Logger LOGGER = LogManager.getLogger(AdTypeServiceImpl.class.getName());
     private final AdTypeDao adTypeDao;
     private final EntityToDtoConverter entityToDtoConverter;
+    private final String adTypeId = "adType with id: ";
 
     @Autowired
     public AdTypeServiceImpl(AdTypeDao adTypeDao,
@@ -31,27 +32,27 @@ public class AdTypeServiceImpl implements AdTypeService {
     public AdTypeDto getAdTypeById(Long id) {
         AdType adType = (AdType) adTypeDao.read(id);
         AdTypeDto adTypeDto = entityToDtoConverter.adTypeToAdTypeDto(adType);
-        LOGGER.info(() -> " adType with id: " + adType.getId() + "has gotten from DB");
+        LOGGER.info(() -> adTypeId + adType.getId() + "has gotten from DB");
         return adTypeDto;
     }
 
     public Long saveAdType(AdTypeDto adTypeDto) {
         AdType adType = entityToDtoConverter.adTypeDtoToAdType(adTypeDto);
         Long id = (Long) adTypeDao.create(adType);
-        LOGGER.info(() -> " adType with id: " + id + "saved in DB");
+        LOGGER.info(() -> adTypeId + id + "saved in DB");
         return id;
     }
 
     public void updateAdType(AdTypeDto adTypeDto) {
         AdType adType = entityToDtoConverter.adTypeDtoToAdType(adTypeDto);
         adTypeDao.update(adType);
-        LOGGER.info(() -> " adType with id: " + adType.getId() + " was updated");
+        LOGGER.info(() -> adTypeId + adType.getId() + " was updated");
     }
 
     public void deleteAdType(Long id) {
         AdType adType = (AdType) adTypeDao.load(id);
         adTypeDao.delete(adType);
-        LOGGER.info(() -> " adType with id: " + id + " was deleted");
+        LOGGER.info(() -> adTypeId + id + " was deleted");
     }
 
     public List getAllAdTypes() {

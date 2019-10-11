@@ -28,6 +28,7 @@ public class AdServiceImpl implements AdService {
     private final CredentialDao credentialDao;
     private final AdTypeDao adTypeDao;
     private final EntityToDtoConverter entityToDtoConverter;
+    private final String adId = "ad with id: ";
 
     @Autowired
     public AdServiceImpl(AdDao adDao, UserDao userDao,
@@ -43,7 +44,7 @@ public class AdServiceImpl implements AdService {
     public AdDto getAdById(Long id) {
         Ad ad = (Ad) adDao.read(id);
         AdDto adDto = entityToDtoConverter.adToAdDto(ad);
-        LOGGER.info(() -> " ad with id: " + ad.getId() + "has gotten from DB");
+        LOGGER.info(() -> adId + ad.getId() + "has gotten from DB");
         return adDto;
     }
 
@@ -52,20 +53,20 @@ public class AdServiceImpl implements AdService {
         User user = (User) userDao.load(adDto.getUserDto().getId());
         ad.setUser(user);
         Long id = (Long) adDao.create(ad);
-        LOGGER.info(() -> " ad with id: " + id + "saved in DB");
+        LOGGER.info(() -> adId + id + "saved in DB");
         return id;
     }
 
     public void updateAd(AdDto adDto) {
         Ad ad = entityToDtoConverter.adDtoToAd(adDto);
         adDao.update(ad);
-        LOGGER.info(() -> " ad with id: " + ad.getId() + " was updated");
+        LOGGER.info(() -> adId + ad.getId() + " was updated");
     }
 
     public void deleteAd(Long adId) {
         Ad ad = (Ad) adDao.load(adId);
         adDao.delete(ad);
-        LOGGER.info(() -> " ad with id: " + adId + " was deleted");
+        LOGGER.info(() -> adId + adId + " was deleted");
     }
 
     public List<AdDto> getAllAds() {

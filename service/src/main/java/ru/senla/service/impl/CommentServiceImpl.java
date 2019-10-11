@@ -26,6 +26,7 @@ public class CommentServiceImpl implements CommentService {
     private final EntityToDtoConverter entityToDtoConverter;
     private final AdDao adDao;
     private final UserDao userDao;
+    private final String commentId = "comment with id: ";
 
     @Autowired
     public CommentServiceImpl(CommentDao commentDao,
@@ -39,7 +40,7 @@ public class CommentServiceImpl implements CommentService {
     public CommentDto getCommentById(Long id) {
         Comment comment = (Comment) commentDao.read(id);
         CommentDto commentDto = entityToDtoConverter.commentToCommentDto(comment);
-        LOGGER.info(() -> " comment with id: " + comment.getId() + "has gotten from DB");
+        LOGGER.info(() -> commentId + comment.getId() + "has gotten from DB");
         return commentDto;
     }
 
@@ -56,20 +57,20 @@ public class CommentServiceImpl implements CommentService {
             comment.setUser(user);
         }
         Long id = (Long) commentDao.create(comment);
-        LOGGER.info(() -> " comment with id: " + id + "saved in DB");
+        LOGGER.info(() -> commentId + id + "saved in DB");
         return id;
     }
 
     public void updateComment(CommentDto commentDto) {
         Comment comment = entityToDtoConverter.commentDtoToComment(commentDto);
         commentDao.update(comment);
-        LOGGER.info(() -> " Comment with id: " + comment.getId() + " was updated");
+        LOGGER.info(() -> commentId + comment.getId() + " was updated");
     }
 
     public void deleteComment(Long id) {
         Comment comment = (Comment) commentDao.load(id);
         commentDao.delete(comment);
-        LOGGER.info(() -> " Comment with id: " + comment.getId() + " was deleted");
+        LOGGER.info(() -> commentId + comment.getId() + " was deleted");
     }
 
     public List<CommentDto> getAllComments() {

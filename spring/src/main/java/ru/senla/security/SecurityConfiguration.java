@@ -19,7 +19,6 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final String TOKEN_SIGNATURE = "1234";
@@ -54,13 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("ad/public").
-                and().ignoring().antMatchers("ad_type/public").
-                and().ignoring().antMatchers("comment/public");
-    }
-
-    protected void configure(HttpSecurity http) throws Exception {
-        http.httpBasic();
+        web.ignoring().antMatchers("/ad/public/**", "/ad_type/public/**", "/comment/public/**");
     }
 
     @Override

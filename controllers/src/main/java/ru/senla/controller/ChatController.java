@@ -22,7 +22,7 @@ import java.util.List;
 
 public class ChatController {
     @Autowired
-    ChatService chatService;
+    private ChatService chatService;
 
     @GetMapping(value = "/all")
     @PreAuthorize("hasRole('ROLE_ADMIN')")

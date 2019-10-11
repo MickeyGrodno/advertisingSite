@@ -24,6 +24,7 @@ public class UserServiceImpl implements UserService {
     private final UserDao userDao;
     private final EntityToDtoConverter entityToDtoMapper;
     private final CredentialDao credentialDao;
+    private final String userId = "user with id: ";
 
     @Autowired
     public UserServiceImpl(UserDao userDao, EntityToDtoConverter entityToDtoMapper,
@@ -36,7 +37,7 @@ public class UserServiceImpl implements UserService {
     public UserDto getUserById(Long id) {
         User user = (User) userDao.read(id);
         UserDto userDto = entityToDtoMapper.userToUserDto(user);
-        LOGGER.info(() -> " User with id: " + user.getId() + "has gotten from DB");
+        LOGGER.info(() -> userId + user.getId() + "has gotten from DB");
         return userDto;
     }
 
@@ -48,20 +49,20 @@ public class UserServiceImpl implements UserService {
             user.setCredential(credential);
         }
         Long id = (Long) userDao.create(user);
-        LOGGER.info(() -> "User with id: " + id + "saved in DB");
+        LOGGER.info(() -> userId + id + "saved in DB");
         return id;
     }
 
     public void updateUser(UserDto userDto) {
         User user = entityToDtoMapper.userDtoToUser(userDto);
         userDao.update(user);
-        LOGGER.info(() -> " User with id: " + user.getId() + " was updated");
+        LOGGER.info(() -> userId + user.getId() + " was updated");
     }
 
     public void deleteUser(Long userId) {
         User user = (User) userDao.load(userId);
         userDao.delete(user);
-        LOGGER.info(() -> " User with id: " + user.getId() + " was updated");
+        LOGGER.info(() -> userId + user.getId() + " was updated");
     }
 
     public List<UserDto> getAllUsers() {

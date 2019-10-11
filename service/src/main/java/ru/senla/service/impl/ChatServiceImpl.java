@@ -21,6 +21,7 @@ public class ChatServiceImpl implements ChatService {
     private static final Logger LOGGER = LogManager.getLogger(ChatServiceImpl.class.getName());
     private final ChatDao chatDao;
     private final EntityToDtoConverter entityToDtoConverter;
+    private final String chatId = "chat with id: ";
 
     @Autowired
     public ChatServiceImpl(ChatDao chatDao, EntityToDtoConverter entityToDtoConverter) {
@@ -31,27 +32,27 @@ public class ChatServiceImpl implements ChatService {
     public ChatDto getChatById(Long id) {
         Chat chat = (Chat) chatDao.read(id);
         ChatDto chatDto = entityToDtoConverter.chatToChatDto(chat);
-        LOGGER.info(() -> " chat with id: " + chat.getId() + "has gotten from DB");
+        LOGGER.info(() -> chatId + chat.getId() + "has gotten from DB");
         return chatDto;
     }
 
     public Long saveChat(ChatDto chatDto) {
         Chat chat = entityToDtoConverter.chatDtoToChat(chatDto);
         Long id = (Long) chatDao.create(chat);
-        LOGGER.info(() -> " chat with id: " + id + "saved in DB");
+        LOGGER.info(() -> chatId + id + "saved in DB");
         return id;
     }
 
     public void updateChat(ChatDto chatDto) {
         Chat chat = entityToDtoConverter.chatDtoToChat(chatDto);
         chatDao.update(chat);
-        LOGGER.info(() -> " chat with id: " + chat.getId() + " was updated");
+        LOGGER.info(() -> chatId + chat.getId() + " was updated");
     }
 
     public void deleteChat(Long id) {
         Chat chat = (Chat) chatDao.load(id);
         chatDao.delete(chat);
-        LOGGER.info(() -> " chat with id: " + id + " was deleted");
+        LOGGER.info(() -> chatId + id + " was deleted");
     }
 
     public List<ChatDto> getAllChats() {

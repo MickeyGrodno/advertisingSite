@@ -23,7 +23,7 @@ import java.util.List;
 public class AdTypeController {
 
     @Autowired
-    AdTypeService adTypeService;
+    private AdTypeService adTypeService;
 
     @GetMapping("/public/all")
     public List<AdTypeDto> getAllAdTypes() {
