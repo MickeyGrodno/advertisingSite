@@ -36,7 +36,7 @@ public class Message implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "text", nullable = false, length = 45)
+    @Column(name = "text", nullable = false)
     private String text;
 
     @Temporal(TemporalType.DATE)

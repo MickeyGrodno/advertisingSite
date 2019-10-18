@@ -39,7 +39,7 @@ public class Ad implements Serializable {
     @JoinColumn(name = "ad_type_id")
     private AdType adType;
 
-    @Column(name = "ad_message", nullable = false, length = 45)
+    @Column(name = "ad_message", nullable = false)
     private String adMessage;
 
     @Temporal(TemporalType.DATE)

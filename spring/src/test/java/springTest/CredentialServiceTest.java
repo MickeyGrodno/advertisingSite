@@ -40,8 +40,10 @@ public class CredentialServiceTest {
         credentialDto = new CredentialDto();
         credentialDto.setEmail("se@mail.ru");
         credentialDto.setLogin("Login");
-        credentialDto.setPassword("mypassword");
+        credentialDto.setPassword("01011990");
         credentialDto.setRole("admin");
+
+
     }
 
     @Test
