@@ -1,5 +1,8 @@
 package ru.senla.entity;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,7 +33,8 @@ public class Credential implements Serializable {
     @Column(name = "role", nullable = false, length = 45)
     private String role;
 
-    @OneToOne(mappedBy = "credential", cascade = javax.persistence.CascadeType.ALL)
+    @OneToOne(mappedBy = "credential")
+    @Cascade(CascadeType.DELETE)
     private User user;
 
     public Credential() {

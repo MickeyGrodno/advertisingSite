@@ -26,12 +26,10 @@ public class Comment implements Serializable {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "ad_id")
     private Ad ad;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "user_id")
     private User user;
 

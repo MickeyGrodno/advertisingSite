@@ -27,12 +27,10 @@ public class Message implements Serializable {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "chat_id")
     private Chat chat;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "user_id")
     private User user;
 

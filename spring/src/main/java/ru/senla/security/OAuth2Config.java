@@ -61,7 +61,7 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
                 .withClient(CLIENT_ID)
                 .secret(encodedClientSecret)
                 .scopes("read", "write")
-                .authorizedGrantTypes("password", "refresh_token").accessTokenValiditySeconds(20000)
-                .refreshTokenValiditySeconds(20000);
+                .authorizedGrantTypes("password", "refresh_token").accessTokenValiditySeconds(2000000)
+                .refreshTokenValiditySeconds(20000000);
     }
 }

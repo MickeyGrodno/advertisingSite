@@ -35,11 +35,11 @@ public class Chat implements Serializable {
             joinColumns = @JoinColumn(name = "chat_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE})
+    @Cascade(CascadeType.MERGE)
     private List<User> userList;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "chat")
-    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE, CascadeType.MERGE})
+    @Cascade(CascadeType.DELETE)
     private List<Message> messageList;
 
     public List<Message> getMessageList() {

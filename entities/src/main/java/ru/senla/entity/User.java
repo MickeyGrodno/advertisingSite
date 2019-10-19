@@ -47,19 +47,16 @@ public class User implements Serializable {
     private int userRating;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.DELETE})
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private List<Ad> adList;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.DELETE})
     private List<Comment> commentList;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, CascadeType.DELETE})
     private List<Message> messageList;
 
     @ManyToMany(mappedBy = "userList")
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.DELETE})
     private List<Chat> chatList;
 
     @OneToOne(cascade = javax.persistence.CascadeType.ALL)

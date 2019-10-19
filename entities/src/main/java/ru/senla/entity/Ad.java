@@ -30,12 +30,10 @@ public class Ad implements Serializable {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "ad_type_id")
     private AdType adType;
 
@@ -51,7 +49,7 @@ public class Ad implements Serializable {
     private Date adTopDate;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ad")
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, CascadeType.DELETE})
+    @Cascade(CascadeType.DELETE)
     private List<Comment> commentsList;
 
     public Ad() {

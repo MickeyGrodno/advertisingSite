@@ -34,7 +34,7 @@ public class AdType implements Serializable {
     private boolean buyOrSale;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "adType")
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, CascadeType.DELETE})
+    @Cascade(CascadeType.DELETE)
     private List<Ad> adList;
 
     public AdType() {

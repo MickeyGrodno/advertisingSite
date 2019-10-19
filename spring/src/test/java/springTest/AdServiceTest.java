@@ -89,6 +89,9 @@ public class AdServiceTest {
         userId = userService.saveUser(userDto);
         userDto.setId(userId);
         adDto.setUserDto(userDto);
+        adTypeId = adTypeService.saveAdType(adTypeDto);
+        adTypeDto.setId(adTypeId);
+        adDto.setAdTypeDto(adTypeDto);
         adId = adService.saveAd(adDto);
     }
 
@@ -117,13 +120,13 @@ public class AdServiceTest {
     @Test
     public void test5searchAdByUserLogin() {
         List<AdDto> adDtoList = adService.searchAdByUserLogin("MyLogin");
-        assertNotNull(adDtoList);
+
     }
     @Test
     public void test6getAdById() {
         AdDto adDto = adService.getAdById(adId);
         adTypeId = adDto.getAdTypeDto().getId();
-        assertNotNull(adDto);
+        assertTrue(adDto.getAdMessage().equals("Test adDto"));
     }
 
     @Test
@@ -135,12 +138,14 @@ public class AdServiceTest {
         List<AdTypeDto> adTypeDtoList = adTypeService.getAllAdTypes();
         adTypeService.deleteAdType(adTypeDtoList.get(0).getId());
         credentialService.deleteCredential(credentialId);
+        userService.deleteUser(userId);
+
     }
 
     @Test
     public void test7getAllAds() {
         List<AdDto> adDtoList = adService.getAllAds();
-        assertNotNull(adDtoList);
+        assertTrue(adDtoList.size() > 0);
     }
 }
 
